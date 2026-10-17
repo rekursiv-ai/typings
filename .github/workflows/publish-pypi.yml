@@ -32,7 +32,7 @@ jobs:
       - name: Build packages
         run: |
           uv build --out-dir dist
-          uv build --sdist --directory typeshed --out-dir ../dist
+          uv build --sdist --no-config --out-dir dist typeshed
 
       - name: Validate built packages
         run: |

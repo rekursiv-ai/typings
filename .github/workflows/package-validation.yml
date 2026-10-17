@@ -57,5 +57,5 @@ jobs:
           uv run pytest -q typeshed
           rm -rf dist
           uv build --out-dir dist
-          uv build --sdist --directory typeshed --out-dir ../dist
+          uv build --sdist --no-config --out-dir dist typeshed
           wheels=(dist/rekursiv_ai_typings-*.whl); python3 -c "import sys, zipfile; names = set(zipfile.ZipFile(sys.argv[1]).namelist()); assert 'yaml-stubs/__init__.pyi' in names and 'triton-stubs/__init__.pyi' in names, sorted(names)[:5]" "${wheels[0]}"
