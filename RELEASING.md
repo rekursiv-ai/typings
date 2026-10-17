@@ -1,23 +1,80 @@
-# Releasing
+# Releasing typings to PyPI
 
-Releases are automatic. Every push to `main` that changes a distribution's
-files runs `.github/workflows/publish-pypi.yml`, which stamps a date version
-(`YYYY.M.D.<run>`) and uploads to PyPI:
+Maintainer-only. Replace `X.Y.Z` with the new version throughout.
 
-| Changed paths | Publishes |
-|---|---|
-| `typings/`, `hatch_build.py`, `pyproject.toml`, `README.md` | `rekursiv-ai-typings` (wheel + sdist) |
-| `typeshed/` | `rekursiv-ai-typeshed` (sdist only) |
+A published GitHub Release triggers `.github/workflows/publish-pypi.yml`,
+which builds, validates, and uploads to PyPI via OIDC trusted publishing
+(no API token). Follow the steps in order.
 
-`rekursiv-ai-typeshed` never ships a wheel: its build copies the stdlib stubs
-out of the installer's own `ty` and `basedpyright`, so a prebuilt wheel would
-freeze them at the release's checker versions.
+## Steps
 
-To republish without a change:
+1. **(First release only) Register the trusted publisher on PyPI.**
+   Skip if already done. Web-console only, no CLI. Go to
+   https://pypi.org/manage/project/typings/settings/publishing/ and add
+   a publisher with these exact values:
 
-```bash
-gh workflow run publish-pypi.yml --repo rekursiv-ai/typings -f packages="typings typeshed"
-```
+   | Field | Value |
+   |---|---|
+   | Owner | `rekursiv-ai` |
+   | Repository name | `typings` |
+   | Workflow filename | `publish-pypi.yml` |
+   | Environment name | `pypi` |
 
-The upload authenticates with the `PYPI_API_TOKEN` secret of the `pypi`
-environment. If PyPI rejects it, rotate that secret.
+   Environment name **must** be `pypi` (matches `publish-pypi.yml:16`).
+   Blank here = `invalid-publisher` at publish time.
+
+2. **Bump the version** in `pyproject.toml` (source of truth). Must
+   increase; PyPI rejects re-uploads.
+
+3. **Refresh the lockfile and validate locally** (same checks CI runs):
+
+   `uv lock` first: the lockfile pins this package's own version, so
+   building without it publishes an artifact whose lock still names the
+   previous one -- and `uv run` below resolves from the lock, so the smoke
+   test imports the OLD code and passes.
+
+   ```bash
+   uv lock
+   uv build
+   uv run python -c "import typings; print(typings.__file__)"
+   ```
+
+4. **Commit and merge to `main`.** Confirm the published version:
+   ```bash
+   gh api repos/rekursiv-ai/typings/contents/pyproject.toml --jq .content | base64 -d | grep '^version'
+   ```
+
+5. **Cut the release** (this triggers the PyPI publish):
+   ```bash
+   gh release create vX.Y.Z --repo rekursiv-ai/typings --title "vX.Y.Z" --generate-notes
+   ```
+
+6. **Watch the workflow:**
+   ```bash
+   gh run watch --repo rekursiv-ai/typings $(gh run list --repo rekursiv-ai/typings --workflow publish-pypi.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+   ```
+
+7. **Confirm it's live:**
+   ```bash
+   curl -s https://pypi.org/pypi/typings/json | jq -r '.info.version'   # should print X.Y.Z
+   ```
+   Browser: https://pypi.org/project/typings/
+
+## If the workflow fails
+
+- **`invalid-publisher`** ("valid token, but no corresponding
+  publisher") — the trusted publisher isn't registered or doesn't match.
+  Do step 1, then re-run: `gh workflow run publish-pypi.yml --repo rekursiv-ai/typings`.
+
+- **Transient PyPI failure** — re-run without a new tag:
+  `gh workflow run publish-pypi.yml --repo rekursiv-ai/typings`.
+
+- **Must ship now, publishing still broken** — upload directly with the
+  project's API token (`rekursiv-ai`-owned, e.g. `$PYPI_TOKEN_WORK`; a
+  personal token can't publish `typings`):
+  ```bash
+  uv build --out-dir dist
+  uv run --with twine twine check dist/typings-X.Y.Z*
+  uv run --with twine twine upload dist/typings-X.Y.Z* -u __token__ -p "$PYPI_TOKEN_WORK"
+  ```
+  Permanent and public; PyPI never allows re-uploading a version.

@@ -1,39 +1,23 @@
-name: Publish Python packages
-
-# Every push to main that changes a distribution's files publishes it under a
-# date version (`YYYY.MM.DD.<run>`), so a stub fix reaches PyPI with no release
-# step. The typeshed ships as an sdist only: its build copies the stdlib stubs
-# out of whichever `ty` and `basedpyright` the installer has, so a prebuilt
-# wheel would freeze them at this run's versions.
+name: Publish Python package
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
   workflow_dispatch:
-    inputs:
-      packages:
-        description: Space-separated subset of "typings typeshed" to publish.
-        default: typings typeshed
-        required: true
 
 permissions:
   contents: read
-
-concurrency:
-  group: publish-pypi
-  cancel-in-progress: false
+  id-token: write
 
 jobs:
   publish:
-    name: Build and publish packages to PyPI
+    name: Build and publish package to PyPI
     runs-on: ubuntu-latest
     # Bounded so a hung publish fails in minutes, not at the 6h default.
     timeout-minutes: 20
     environment: pypi
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
@@ -41,51 +25,19 @@ jobs:
 
       - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
 
-      - id: changed
-        name: Select changed distributions
-        env:
-          BEFORE: ${{ github.event.before }}
-          REQUESTED: ${{ inputs.packages }}
+      - name: Build package
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            selected="$REQUESTED"
-          elif [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
-            selected="typings typeshed"
-          else
-            files="$(git diff --name-only "$BEFORE" "$GITHUB_SHA")"
-            selected=""
-            grep -qE '^(typings/|hatch_build\.py$|pyproject\.toml$|README\.md$)' <<<"$files" && selected="typings"
-            grep -q '^typeshed/' <<<"$files" && selected="$selected typeshed"
-          fi
-          echo "packages=$selected" >> "$GITHUB_OUTPUT"
-          echo "version=$(date -u +%Y.%-m.%-d).${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+          uv build --out-dir dist
+          # Sdist only: its build copies the stdlib out of the installer's own
+          # checkers. `--no-config`: the root's `match-runtime` settings need
+          # static metadata this hook-built package does not declare.
+          uv build --sdist --no-config --out-dir dist typeshed
 
-      - name: Build packages
-        if: steps.changed.outputs.packages != ''
-        env:
-          PACKAGES: ${{ steps.changed.outputs.packages }}
-          VERSION: ${{ steps.changed.outputs.version }}
+      - name: Validate built package
         run: |
-          mkdir -p dist
-          if [[ " $PACKAGES " == *" typings "* ]]; then
-            uv version --frozen "$VERSION"
-            uv build --out-dir dist
-            wheels=(dist/rekursiv_ai_typings-*.whl)
-            python3 -c "import sys, zipfile; names = set(zipfile.ZipFile(sys.argv[1]).namelist()); assert 'yaml-stubs/__init__.pyi' in names, sorted(names)[:5]" "${wheels[0]}"
-          fi
-          if [[ " $PACKAGES " == *" typeshed "* ]]; then
-            uv version --frozen --no-config --directory typeshed "$VERSION"
-            # `--no-config`: the root's `match-runtime` build settings need static
-            # metadata this hook-built package does not declare.
-            uv build --sdist --no-config --out-dir dist typeshed
-            sdists=(dist/rekursiv_ai_typeshed-*.tar.gz)
-            uv run --isolated --no-project --no-config --with "${sdists[0]}" --with basedpyright --with ty \
-              python -P -c "import rekursiv_ai_typeshed; print(rekursiv_ai_typeshed.__file__)"
-          fi
-          ls dist
+          uv run python -c "import rekursiv_ai_typeshed; print(rekursiv_ai_typeshed.__file__)"
 
-      - name: Publish packages
-        if: steps.changed.outputs.packages != ''
+      - name: Publish package
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}

@@ -1,6 +1,6 @@
 [project]
 name = "rekursiv-ai-typeshed"
-version = "0.1.0"
+version = "0.1.1"
 description = "typeshed for basedpyright and ty with int/float ** returning float, not Any."
 readme = "README.md"
 requires-python = ">=3.12"
