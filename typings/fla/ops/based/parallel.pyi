@@ -1,5 +1,3 @@
-from typing import Any
-
 from fla.utils import autocast_custom_bwd, autocast_custom_fwd, input_guard
 from torch import Tensor
 
@@ -66,4 +64,4 @@ def parallel_based(
     scale: float | None = ...,
     use_norm: bool = ...,
     head_first: bool = ...,
-) -> Any: ...
+) -> Tensor: ...

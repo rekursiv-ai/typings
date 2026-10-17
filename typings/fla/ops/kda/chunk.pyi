@@ -85,5 +85,5 @@ def chunk_kda(
     return_intermediate_states: bool = ...,
     cp_context: FLACPContext = ...,
     transpose_state_layout: bool = ...,
-    **kwargs,
-) -> None: ...
+    **kwargs: object,
+) -> tuple[torch.Tensor, torch.Tensor | None]: ...

@@ -5,7 +5,7 @@ import threading
 
 """Generic backend dispatch system for FLA operations."""
 logger = ...
-F = TypeVar("F", bound=Callable)
+F = TypeVar("F", bound=Callable[..., object])
 _DISPATCH_DISABLED = ...
 
 class BaseBackend:
@@ -32,6 +32,6 @@ class BackendRegistry:
     @classmethod
     def ensure_initialized(cls, operation: str) -> None: ...
 
-def dispatch(operation: str) -> Callable[..., F]: ...
+def dispatch(operation: str) -> Callable[[F], F]: ...
 
 __all__ = ["BackendRegistry", "BaseBackend", "dispatch"]

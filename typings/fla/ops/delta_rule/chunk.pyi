@@ -1,5 +1,3 @@
-from typing import Any
-
 from fla.utils import autocast_custom_bwd, autocast_custom_fwd, input_guard
 from torch import Tensor
 
@@ -79,5 +77,5 @@ def chunk_delta_rule(
     use_qk_l2norm_in_kernel: bool = ...,
     cu_seqlens: torch.LongTensor | None = ...,
     cu_seqlens_cpu: torch.LongTensor | None = ...,
-    **kwargs,
-) -> tuple[Any, Any]: ...
+    **kwargs: object,
+) -> tuple[torch.Tensor, torch.Tensor | None]: ...

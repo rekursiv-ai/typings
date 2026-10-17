@@ -386,7 +386,7 @@ def module_path(module_name: str) -> Path | None:
     if spec is None or spec.origin is None or spec.origin in {"built-in", "frozen"}:
         return None
     path = Path(spec.origin)
-    if path.suffix != ".py" or not path.is_relative_to(_CWD.parents[2]):
+    if path.suffix != ".py" or not path.is_relative_to(_CWD.parents[1]):
         return None
     return path
 

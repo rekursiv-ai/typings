@@ -2,15 +2,32 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Protocol, cast
 
 import pytest
 
-from hatch_build import layout
+from hatch_build import StubsBuildHook, layout
 
 
 if TYPE_CHECKING:
     from pathlib import Path
+
+
+class _Hook(Protocol):
+    def initialize(self, version: str, build_data: dict[str, object]) -> None: ...
+
+
+class _HookClass(Protocol):
+    def __call__(
+        self,
+        *,
+        root: str,
+        config: dict[str, object],
+        build_config: object,
+        metadata: object,
+        directory: str,
+        target_name: str,
+    ) -> _Hook: ...
 
 
 @pytest.fixture
@@ -47,6 +64,29 @@ def test_only_placeholder_trees_ship_as_shared_data(stubs: Path) -> None:
     _, shared_data = layout(stubs)
     assert shared_data == {
         str(stubs / "triton"): "share/rekursiv-ai-typings/triton",
+    }
+
+
+def test_initialize_adds_the_layout_to_existing_build_data(stubs: Path) -> None:
+    hook = cast("_HookClass", StubsBuildHook)(
+        root=str(stubs.parent),
+        config={},
+        build_config=object(),
+        metadata=object(),
+        directory=str(stubs.parent / "dist"),
+        target_name="wheel",
+    )
+    build_data: dict[str, object] = {
+        "force_include": {"LICENSE": "LICENSE"},
+        "shared_data": {"a": "share/a"},
+    }
+
+    hook.initialize("standard", build_data)
+
+    force_include, shared_data = layout(stubs)
+    assert build_data == {
+        "force_include": {"LICENSE": "LICENSE", **force_include},
+        "shared_data": {"a": "share/a", **shared_data},
     }
 
 
