@@ -1,4 +1,4 @@
-# rekursiv-ai-typings
+# typings🏷️
 
 [![PyPI version](https://img.shields.io/pypi/v/rekursiv-ai-typings.svg)](https://pypi.org/project/rekursiv-ai-typings/)
 [![CI](https://github.com/rekursiv-ai/typings/actions/workflows/package-validation.yml/badge.svg?branch=main)](https://github.com/rekursiv-ai/typings/actions/workflows/package-validation.yml)
@@ -6,8 +6,9 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Discord](https://img.shields.io/discord/1530237005311639592?logo=discord&logoColor=white&label=Discord&color=5865F2)](https://discord.gg/2GZFPPvCqn)
 
-Hand-written type stubs for third-party libraries that ship no types, or ship
-types loose enough to fail `basedpyright` and `ty` in strict mode.
+Type stubs for third-party libraries, written by hand. Some of these libraries
+ship no types at all. Others ship types that `basedpyright` and `ty` reject in
+strict mode.
 
 ## Quick Start
 
@@ -26,9 +27,9 @@ uv add --dev rekursiv-ai-typings
 # Alternatively: python -m pip install rekursiv-ai-typings
 ```
 
-Each `typings/<pkg>/` installs as the PEP 561 stub-only package `<pkg>-stubs`.
-Both checkers find those in site-packages on their own, so installing the
-wheel is the whole setup.
+There is nothing to configure. Each library's stubs install as a separate
+`<pkg>-stubs` package (the standard PEP 561 layout), and both checkers look for
+those automatically.
 
 ## Example
 
@@ -43,12 +44,14 @@ reveal_type(data)  # object, not Any
 
 ### Override one library
 
-A project's own stubs win. Put them under the project's `stubPath`, named the
-same way:
+If you want your own stubs for a library instead of ours, put them in your
+project and they take priority. Name the directory `<pkg>-stubs`:
 
 ```text
 typings/<pkg>-stubs/__init__.pyi
 ```
+
+Then tell both checkers where to look:
 
 ```toml
 [tool.basedpyright]
@@ -58,34 +61,33 @@ stubPath = "typings"
 extra-paths = ["typings"]
 ```
 
-Name the directory `<pkg>-stubs`, not `<pkg>`: ty ignores a local
-`typings/<pkg>/` while an installed `<pkg>-stubs` exists.
+The `-stubs` suffix matters. If you name the directory `<pkg>`, ty ignores it
+and uses ours.
 
 ### Partial stubs
 
-A tree that stubs only some of a library's modules (`fastapi`, `starlette`,
-`lxml`, `curl_cffi`, `lark`, `optax`, `sklearn`, `torch`) carries a `py.typed`
-reading `partial`, so the checkers take the remaining modules from the library
-itself.
+Some stubs cover only part of a library: `fastapi`, `starlette`, `lxml`,
+`curl_cffi`, `lark`, `optax`, `sklearn`, and `torch`. Each of these is marked
+partial, so for any module we don't stub, the checkers fall back to the
+library's own types.
 
-### Placeholder sources
+### Triton on macOS
 
-`triton` is a linux-only wheel. Where it is absent, basedpyright reports
-`reportMissingModuleSource` on every `import triton`, and an inline
-suppression is then flagged unnecessary on linux. The wheel therefore also
-installs the `triton` tree, `.py` placeholders included, at
-`.venv/share/rekursiv-ai-typings/triton`. Add its parent to `extraPaths`:
+`triton` only installs on Linux. On macOS, basedpyright reports
+`reportMissingModuleSource` on every `import triton`. To fix that, this package
+also installs placeholder `.py` files for triton. Add their location to
+`extraPaths`:
 
 ```toml
 [tool.basedpyright]
 extraPaths = [".venv/share/rekursiv-ai-typings"]
 ```
 
-Types still come from `triton-stubs`; the placeholders only satisfy source
-resolution.
+The placeholders only make the import resolve. The types still come from our
+stubs.
 
 ### Patched standard library
 
-`rekursiv-ai-typeshed`, in `typeshed/`, is the companion package: the
-checkers' bundled stdlib stubs with `int`/`float` `**` returning `float`
-instead of `Any`. It needs one path per checker; see `typeshed/README.md`.
+`rekursiv-ai-typeshed`, in `typeshed/`, is a separate package from this repo.
+It fixes the standard-library stubs so that `x ** 0.5` is a `float` rather
+than `Any`. See `typeshed/README.md`.

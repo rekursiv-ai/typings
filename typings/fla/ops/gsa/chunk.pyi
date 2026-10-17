@@ -291,5 +291,5 @@ def chunk_gsa(
     checkpoint_level: int | None = ...,
     cu_seqlens: torch.LongTensor | None = ...,
     cu_seqlens_cpu: torch.LongTensor | None = ...,
-    **kwargs,
+    **kwargs: object,
 ) -> tuple[torch.Tensor, torch.Tensor]: ...
