@@ -6,7 +6,7 @@ files runs `.github/workflows/publish-pypi.yml`, which stamps a date version
 
 | Changed paths | Publishes |
 |---|---|
-| `stubs/`, `hatch_build.py`, `pyproject.toml`, `README.md` | `rekursiv-ai-typings` (wheel + sdist) |
+| `typings/`, `hatch_build.py`, `pyproject.toml`, `README.md` | `rekursiv-ai-typings` (wheel + sdist) |
 | `typeshed/` | `rekursiv-ai-typeshed` (sdist only) |
 
 `rekursiv-ai-typeshed` never ships a wheel: its build copies the stdlib stubs

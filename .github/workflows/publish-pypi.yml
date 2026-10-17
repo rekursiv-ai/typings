@@ -54,7 +54,7 @@ jobs:
           else
             files="$(git diff --name-only "$BEFORE" "$GITHUB_SHA")"
             selected=""
-            grep -qE '^(stubs/|hatch_build\.py$|pyproject\.toml$|README\.md$)' <<<"$files" && selected="typings"
+            grep -qE '^(typings/|hatch_build\.py$|pyproject\.toml$|README\.md$)' <<<"$files" && selected="typings"
             grep -q '^typeshed/' <<<"$files" && selected="$selected typeshed"
           fi
           echo "packages=$selected" >> "$GITHUB_OUTPUT"

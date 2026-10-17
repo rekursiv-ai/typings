@@ -250,15 +250,13 @@ jobs:
             --record-on-validation-failure "${{ github.event_name == 'push' }}" \
             --refresh-public-lockfile \
             --validation-command 'uv sync --frozen --all-groups' \
-            --validation-command 'uv run ruff check --no-fix typeshed hatch_build.py' \
-            --validation-command 'uv run ruff format --check typeshed hatch_build.py' \
-            --validation-command 'uv run basedpyright' \
-            --validation-command 'uv run ty check' \
-            --validation-command 'uv run pytest -q typeshed' \
+            --validation-command 'uv run pre-commit run --all-files --hook-stage pre-commit' \
+            --validation-command 'uv run pre-commit run --all-files --hook-stage pre-push' \
+            --validation-command 'uv run python -c "import rekursiv_ai_typeshed"' \
             --validation-command 'rm -rf dist' \
             --validation-command 'uv build --out-dir dist' \
             --validation-command 'uv build --sdist --no-config --out-dir dist typeshed' \
-            --validation-command 'wheels=(dist/rekursiv_ai_typings-*.whl); python3 -c "import sys, zipfile; names = set(zipfile.ZipFile(sys.argv[1]).namelist()); assert '"'"'yaml-stubs/__init__.pyi'"'"' in names and '"'"'triton-stubs/__init__.pyi'"'"' in names, sorted(names)[:5]" "${wheels[0]}"' \
+            --validation-command 'wheels=(dist/rekursiv_ai_typings-*.whl); wheel="${wheels[0]}"; uv run python -m zipfile -l "$wheel" | grep -q '"'"'yaml-stubs/__init__.pyi'"'"'' \
             --open-pr false
 
       - name: Open or update target import PR

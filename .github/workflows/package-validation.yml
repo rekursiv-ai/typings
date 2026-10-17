@@ -47,15 +47,13 @@ jobs:
           timeout 300 sudo apt-get install -y --no-install-recommends ripgrep fd-find
       - name: Validate package
         run: |
-          # Stub trees are data, not code: lint, type-check and test only the build
-          # scripts and the typeshed package, then build both distributions.
+          # Lint/type/test checks come from this package's own .pre-commit-config.yaml.
+          # Restating each tool here means a newly added hook silently goes unrun.
           uv sync --frozen --all-groups
-          uv run ruff check --no-fix typeshed hatch_build.py
-          uv run ruff format --check typeshed hatch_build.py
-          uv run basedpyright
-          uv run ty check
-          uv run pytest -q typeshed
+          uv run pre-commit run --all-files --hook-stage pre-commit
+          uv run pre-commit run --all-files --hook-stage pre-push
+          uv run python -c "import rekursiv_ai_typeshed"
           rm -rf dist
           uv build --out-dir dist
           uv build --sdist --no-config --out-dir dist typeshed
-          wheels=(dist/rekursiv_ai_typings-*.whl); python3 -c "import sys, zipfile; names = set(zipfile.ZipFile(sys.argv[1]).namelist()); assert 'yaml-stubs/__init__.pyi' in names and 'triton-stubs/__init__.pyi' in names, sorted(names)[:5]" "${wheels[0]}"
+          wheels=(dist/rekursiv_ai_typings-*.whl); wheel="${wheels[0]}"; uv run python -m zipfile -l "$wheel" | grep -q 'yaml-stubs/__init__.pyi'

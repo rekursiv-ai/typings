@@ -164,8 +164,8 @@ def test_build_is_idempotent(tmp_path: Path) -> None:
     assert first == second
 
 
-# One in-process wheel build (0.8 s): generates the tree, then zips it.
-@pytest.mark.compute_large_fixture
+# One in-process wheel build (0.8 s): generates the tree, then zips it. Unmarked:
+# it is the fast tier's only run of ``build`` and the wheel hook.
 def test_wheel_build_removes_its_temp_tree(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -185,6 +185,6 @@ def test_wheel_build_removes_its_temp_tree(
 
 
 if __name__ == "__main__":
-    from rekursiv_ai_typeshed.testing import test_main
+    from lib.testing.runner import test_main
 
     test_main(__file__)
