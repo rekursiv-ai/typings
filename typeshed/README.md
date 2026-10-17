@@ -1,4 +1,4 @@
-# rekursiv-ai-typeshed
+# typeshed🛖
 
 Standard-library stubs for `ty` and `basedpyright`, patched so that `x ** 0.5`
 is a `float` rather than `Any`.
