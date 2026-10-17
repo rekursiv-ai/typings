@@ -1,0 +1,24 @@
+from _typeshed import Incomplete
+from sklearn.datasets import get_data_home as get_data_home
+from sklearn.datasets._base import (
+    RemoteFileMetadata as RemoteFileMetadata,
+    load_descr as load_descr,
+)
+from sklearn.utils import Bunch as Bunch
+from sklearn.utils._param_validation import (
+    Interval as Interval,
+    validate_params as validate_params,
+)
+
+ARCHIVE: Incomplete
+logger: Incomplete
+
+def fetch_california_housing(
+    *,
+    data_home=None,
+    download_if_missing: bool = True,
+    return_X_y: bool = False,
+    as_frame: bool = False,
+    n_retries: int = 3,
+    delay: float = 1.0,
+): ...

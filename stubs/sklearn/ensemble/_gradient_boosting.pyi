@@ -1,0 +1,5 @@
+import _cython_3_2_2
+
+__test__: dict
+predict_stage: _cython_3_2_2.cython_function_or_method
+predict_stages: _cython_3_2_2.cython_function_or_method

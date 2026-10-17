@@ -1,0 +1,5 @@
+import _cython_3_2_2
+
+__test__: dict
+py_calc_expanded_nnz_deg2: _cython_3_2_2.cython_function_or_method
+py_calc_expanded_nnz_deg3: _cython_3_2_2.cython_function_or_method

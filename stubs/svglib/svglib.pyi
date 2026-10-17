@@ -1,0 +1,3 @@
+from reportlab.graphics.shapes import Drawing
+
+def svg2rlg(path: str) -> Drawing | None: ...

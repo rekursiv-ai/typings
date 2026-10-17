@@ -1,0 +1,85 @@
+from enum import Enum
+from typing import Any
+
+class BlockType(Enum):
+    INVALID = 0
+    OUT_OF_BOUNDS = 1
+    GRASS = 2
+    WATER = 3
+    STONE = 4
+    TREE = 5
+    WOOD = 6
+    PATH = 7
+    COAL = 8
+    IRON = 9
+    DIAMOND = 10
+    CRAFTING_TABLE = 11
+    FURNACE = 12
+    SAND = 13
+    LAVA = 14
+    PLANT = 15
+    RIPE_PLANT = 16
+    WALL = 17
+    DARKNESS = 18
+    WALL_MOSS = 19
+    STALAGMITE = 20
+    SAPPHIRE = 21
+    RUBY = 22
+    CHEST = 23
+    FOUNTAIN = 24
+    FIRE_GRASS = 25
+    ICE_GRASS = 26
+    GRAVEL = 27
+    FIRE_TREE = 28
+    ICE_SHRUB = 29
+    ENCHANTMENT_TABLE_FIRE = 30
+    ENCHANTMENT_TABLE_ICE = 31
+    NECROMANCER = 32
+    GRAVE = 33
+    GRAVE2 = 34
+    GRAVE3 = 35
+    NECROMANCER_VULNERABLE = 36
+
+class ItemType(Enum):
+    NONE = 0
+    TORCH = 1
+    LADDER_DOWN = 2
+    LADDER_UP = 3
+    LADDER_DOWN_BLOCKED = 4
+
+class Action(Enum):
+    NOOP = 0
+
+class Achievement(Enum):
+    COLLECT_WOOD = 0
+
+class MobType(Enum):
+    PASSIVE = 0
+    MELEE = 1
+    RANGED = 2
+    PROJECTILE = 3
+
+class ProjectileType(Enum):
+    ARROW = 0
+
+OBS_DIM: tuple[int, int]
+MAX_OBS_DIM: int
+MONSTERS_KILLED_TO_CLEAR_LEVEL: int
+BOSS_FIGHT_EXTRA_DAMAGE: float
+BOSS_FIGHT_SPAWN_TURNS: int
+
+DIRECTIONS: Any
+CLOSE_BLOCKS: Any
+SOLID_BLOCK_MAPPING: Any
+CAN_PLACE_ITEM_MAPPING: Any
+FLOOR_MOB_MAPPING: Any
+FLOOR_MOB_SPAWN_CHANCE: Any
+MOB_TYPE_COLLISION_MAPPING: Any
+MOB_TYPE_DAMAGE_MAPPING: Any
+MOB_TYPE_HEALTH_MAPPING: Any
+MOB_TYPE_DEFENSE_MAPPING: Any
+RANGED_MOB_TYPE_TO_PROJECTILE_TYPE_MAPPING: Any
+ACHIEVEMENT_REWARD_MAP: Any
+LEVEL_ACHIEVEMENT_MAP: Any
+MOB_ACHIEVEMENT_MAP: Any
+TORCH_LIGHT_MAP: Any

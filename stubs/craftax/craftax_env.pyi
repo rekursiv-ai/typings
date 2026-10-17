@@ -1,0 +1,3 @@
+from typing import Any
+
+def make_craftax_env_from_name(name: str, auto_reset: bool = ...) -> Any: ...

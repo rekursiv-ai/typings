@@ -1,0 +1,6 @@
+from e2b.sandbox.sandbox_api import SandboxInfo
+
+class AsyncSandboxPaginator:
+    @property
+    def has_next(self) -> bool: ...
+    async def next_items(self) -> list[SandboxInfo]: ...

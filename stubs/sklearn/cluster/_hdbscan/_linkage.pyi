@@ -1,0 +1,9 @@
+import _cython_3_2_2
+import numpy.dtypes
+
+HIERARCHY_dtype: numpy.dtypes.VoidDType
+MST_edge_dtype: numpy.dtypes.VoidDType
+__test__: dict
+make_single_linkage: _cython_3_2_2.cython_function_or_method
+mst_from_data_matrix: _cython_3_2_2.cython_function_or_method
+mst_from_mutual_reachability: _cython_3_2_2.cython_function_or_method

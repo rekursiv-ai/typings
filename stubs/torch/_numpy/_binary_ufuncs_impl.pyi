@@ -1,0 +1,6 @@
+from typing import Any
+
+from torch import Tensor
+
+def matmul(x, y) -> Tensor: ...
+def divmod(x, y) -> tuple[Any, Any]: ...

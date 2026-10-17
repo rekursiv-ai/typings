@@ -1,0 +1,11 @@
+from sklearn.exceptions import ConvergenceWarning as ConvergenceWarning
+
+import _cython_3_2_2
+
+__test__: dict
+enet_coordinate_descent: _cython_3_2_2.fused_cython_function
+enet_coordinate_descent_gram: _cython_3_2_2.fused_cython_function
+enet_coordinate_descent_multi_task: _cython_3_2_2.fused_cython_function
+message_conv: str
+message_ridge: str
+sparse_enet_coordinate_descent: _cython_3_2_2.fused_cython_function

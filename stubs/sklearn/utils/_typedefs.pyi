@@ -1,0 +1,4 @@
+import _cython_3_2_2
+
+__test__: dict
+testing_make_array_from_typed_val: _cython_3_2_2.fused_cython_function

@@ -1,0 +1,48 @@
+name: Publish Python packages
+
+# One release publishes both distributions. The typeshed ships as an sdist only:
+# its build copies the stdlib stubs out of whichever `ty` and `basedpyright` the
+# installer has, so a prebuilt wheel would freeze them at the release's versions.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    name: Build and publish packages to PyPI
+    runs-on: ubuntu-latest
+    # Bounded so a hung publish fails in minutes, not at the 6h default.
+    timeout-minutes: 20
+    environment: pypi
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+
+      - name: Build packages
+        run: |
+          uv build --out-dir dist
+          uv build --sdist --directory typeshed --out-dir ../dist
+
+      - name: Validate built packages
+        run: |
+          wheels=(dist/rekursiv_ai_typings-*.whl)
+          python3 -c "import sys, zipfile; names = set(zipfile.ZipFile(sys.argv[1]).namelist()); assert 'yaml-stubs/__init__.pyi' in names, sorted(names)[:5]" "${wheels[0]}"
+          sdists=(dist/rekursiv_ai_typeshed-*.tar.gz)
+          uv run --isolated --no-project --with "${sdists[0]}" --with basedpyright --with ty \
+            python -P -c "import rekursiv_ai_typeshed; print(rekursiv_ai_typeshed.__file__)"
+
+      - name: Publish packages
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
+        with:
+          skip-existing: true

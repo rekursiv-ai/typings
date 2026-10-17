@@ -1,0 +1,11 @@
+import _cython_3_2_2
+
+__test__: dict
+assign_rows_csr: _cython_3_2_2.fused_cython_function
+csc_mean_variance_axis0: _cython_3_2_2.cython_function_or_method
+csr_matmul_csr_to_dense: _cython_3_2_2.fused_cython_function
+csr_mean_variance_axis0: _cython_3_2_2.cython_function_or_method
+csr_row_norms: _cython_3_2_2.cython_function_or_method
+incr_mean_variance_axis0: _cython_3_2_2.cython_function_or_method
+inplace_csr_row_normalize_l1: _cython_3_2_2.cython_function_or_method
+inplace_csr_row_normalize_l2: _cython_3_2_2.cython_function_or_method

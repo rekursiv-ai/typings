@@ -1,0 +1,7 @@
+import _cython_3_2_2
+
+__pyx_capi__: dict
+__test__: dict
+in_bitset_memoryview: _cython_3_2_2.cython_function_or_method
+set_bitset_memoryview: _cython_3_2_2.cython_function_or_method
+set_raw_bitset_from_binned_bitset: _cython_3_2_2.cython_function_or_method

@@ -1,0 +1,6 @@
+from sklearn import __version__ as __version__
+from sklearn._config import get_config as get_config
+from sklearn.utils.fixes import parse_version as parse_version
+
+class _HTMLDocumentationLinkMixin: ...
+class ReprHTMLMixin: ...

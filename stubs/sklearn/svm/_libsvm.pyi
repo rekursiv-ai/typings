@@ -1,0 +1,10 @@
+import _cython_3_2_2
+
+LIBSVM_KERNEL_TYPES: list
+__test__: dict
+cross_validation: _cython_3_2_2.cython_function_or_method
+decision_function: _cython_3_2_2.cython_function_or_method
+fit: _cython_3_2_2.cython_function_or_method
+predict: _cython_3_2_2.cython_function_or_method
+predict_proba: _cython_3_2_2.cython_function_or_method
+set_verbosity_wrap: _cython_3_2_2.cython_function_or_method

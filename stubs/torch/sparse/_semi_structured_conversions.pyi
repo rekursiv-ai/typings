@@ -1,0 +1,6 @@
+from typing import Any
+
+from torch import Tensor
+
+def sparse_semi_structured_from_dense_cutlass(dense) -> tuple[Tensor | Any, Any]: ...
+def sparse_semi_structured_to_dense_cutlass(sparse, meta_reordered) -> Tensor: ...

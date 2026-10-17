@@ -1,0 +1,3 @@
+from sklearn.base import is_classifier as is_classifier
+
+def get_equivalent_estimator(estimator, lib: str = "lightgbm", n_classes=None): ...

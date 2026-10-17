@@ -1,0 +1,3 @@
+from sklearn.exceptions import ConvergenceWarning as ConvergenceWarning
+
+class _LineSearchError(RuntimeError): ...

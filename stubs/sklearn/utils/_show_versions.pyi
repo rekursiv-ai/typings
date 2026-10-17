@@ -1,0 +1,3 @@
+from sklearn import __version__ as __version__
+
+def show_versions() -> None: ...

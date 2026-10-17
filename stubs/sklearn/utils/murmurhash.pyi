@@ -1,0 +1,9 @@
+import _cython_3_2_2
+
+__pyx_capi__: dict
+__test__: dict
+murmurhash3_32: _cython_3_2_2.cython_function_or_method
+murmurhash3_bytes_s32: _cython_3_2_2.cython_function_or_method
+murmurhash3_bytes_u32: _cython_3_2_2.cython_function_or_method
+murmurhash3_int_s32: _cython_3_2_2.cython_function_or_method
+murmurhash3_int_u32: _cython_3_2_2.cython_function_or_method

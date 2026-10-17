@@ -1,0 +1,2 @@
+class LogEntry:
+    message: str

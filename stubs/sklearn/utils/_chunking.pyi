@@ -1,0 +1,13 @@
+from collections.abc import Generator
+
+from _typeshed import Incomplete
+from sklearn._config import get_config as get_config
+from sklearn.utils._param_validation import (
+    Interval as Interval,
+    validate_params as validate_params,
+)
+
+def chunk_generator(gen, chunksize) -> Generator[Incomplete]: ...
+def gen_batches(n, batch_size, *, min_batch_size: int = 0) -> Generator[Incomplete]: ...
+def gen_even_slices(n, n_packs, *, n_samples=None) -> Generator[Incomplete]: ...
+def get_chunk_n_rows(row_bytes, *, max_n_rows=None, working_memory=None): ...

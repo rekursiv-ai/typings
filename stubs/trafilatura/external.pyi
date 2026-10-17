@@ -1,0 +1,3 @@
+from lxml.etree import _Element
+
+def try_readability(htmlinput: _Element) -> _Element: ...

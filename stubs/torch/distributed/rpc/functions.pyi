@@ -1,0 +1,3 @@
+from typing import Any
+
+def async_execution(fn) -> _Wrapped[..., Any, ..., Any]: ...

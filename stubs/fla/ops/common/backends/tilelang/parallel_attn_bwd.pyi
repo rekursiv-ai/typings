@@ -1,0 +1,17 @@
+from torch import Tensor
+
+def parallel_attn_bwd_tilelang(
+    q,
+    k,
+    v,
+    o,
+    g_cumsum,
+    lse,
+    do,
+    sink_bias=...,
+    scale=...,
+    window_size=...,
+    chunk_size=...,
+    cu_seqlens=...,
+    chunk_indices=...,
+) -> tuple[Tensor, Tensor, Tensor, Tensor | None, Tensor | None]: ...

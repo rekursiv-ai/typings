@@ -1,0 +1,5 @@
+import _cython_3_2_2
+
+__test__: dict
+get_dense_row_string: _cython_3_2_2.fused_cython_function
+get_sparse_row_string: _cython_3_2_2.fused_cython_function

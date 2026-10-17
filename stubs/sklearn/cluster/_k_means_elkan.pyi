@@ -1,0 +1,10 @@
+from sklearn.utils.extmath import row_norms as row_norms
+
+import _cython_3_2_2
+
+CHUNK_SIZE: int
+__test__: dict
+elkan_iter_chunked_dense: _cython_3_2_2.fused_cython_function
+elkan_iter_chunked_sparse: _cython_3_2_2.fused_cython_function
+init_bounds_dense: _cython_3_2_2.fused_cython_function
+init_bounds_sparse: _cython_3_2_2.fused_cython_function
