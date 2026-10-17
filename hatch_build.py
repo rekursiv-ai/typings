@@ -29,9 +29,12 @@ class StubsBuildHook(BuildHookInterface[WheelBuilderConfig]):
         )
         shared = cast("dict[str, str]", build_data.setdefault("shared_data", {}))
         stubs = _CWD / "stubs"
-        for path in sorted(stubs.rglob("*.py*")):
+        for path in sorted(stubs.rglob("*")):
             rel = path.relative_to(stubs)
-            if path.suffix in {".py", ".pyi"} and not _UNSHIPPED & set(rel.parents):
+            # `py.typed` saying `partial` marks a tree that stubs only some
+            # modules, so the checkers fall back to the library for the rest.
+            shipped = path.suffix in {".py", ".pyi"} or path.name == "py.typed"
+            if shipped and not _UNSHIPPED & set(rel.parents):
                 force_include[str(path)] = str(
                     Path(f"{rel.parts[0]}-stubs", *rel.parts[1:]),
                 )

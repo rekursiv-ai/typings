@@ -31,6 +31,12 @@ extra-paths = ["typings"]
 Name the directory `<pkg>-stubs`, not `<pkg>`: ty ignores a local `typings/<pkg>/`
 while an installed `<pkg>-stubs` exists.
 
+## Partial stubs
+
+A tree that stubs only some of a library's modules (`fastapi`, `starlette`,
+`lxml`, `curl_cffi`) carries a `py.typed` reading `partial`, so the checkers
+take the remaining modules from the library itself.
+
 ## Placeholder sources
 
 `triton` is a linux-only wheel. Where it is absent, basedpyright reports

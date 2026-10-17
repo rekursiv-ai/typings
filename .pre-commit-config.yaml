@@ -1,0 +1,46 @@
+# Same checks `package-validation.yml` runs, for local use:
+#
+#   uv run --group dev pre-commit run --all-files
+
+fail_fast: false
+default_stages: [pre-commit]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.8
+    hooks:
+      - id: ruff-format
+        files: ^(typeshed/|hatch_build\.py$)
+      - id: ruff-check
+        args: [--fix]
+        files: ^(typeshed/|hatch_build\.py$)
+
+  - repo: local
+    hooks:
+      - id: basedpyright
+        name: basedpyright
+        language: system
+        pass_filenames: false
+        types_or: [python, pyi]
+        entry: uv --quiet run --frozen basedpyright
+      - id: ty-check
+        name: ty-check
+        language: system
+        pass_filenames: false
+        types_or: [python, pyi]
+        entry: uv --quiet run --frozen ty check
+      - id: pytest
+        name: pytest
+        language: system
+        pass_filenames: false
+        types: [python]
+        entry: uv --quiet run --frozen pytest -q typeshed
