@@ -1,9 +1,9 @@
 # Generated content -- partially. The structure and docstrings are produced by
 # `python stub.py`. The following are hand-edited additions that must be
 # re-applied after each regeneration:
-#   - module-level imports (`os`, `typing`)
+#   - module-level imports (`os`, `typing`, `torch`)
 #   - `__version__: str`
-#   - type annotations on `TensorSpec` / `serialize` / `serialize_file`
+#   - type annotations on `TensorSpec` / `serialize` / `serialize_file` / `safe_open`
 #
 # TODO: once we upgrade pyo3 to >= 0.28, replace `stub.py` with a dedicated
 # `tools/stub-gen` binary using `pyo3-introspection`,
@@ -12,8 +12,11 @@
 # signatures -- no hand-editing, no drift.
 
 from collections.abc import Sequence
+from typing import Self
 
 import os
+
+from torch import Tensor
 
 __version__: str
 
@@ -52,19 +55,24 @@ class TensorSpec:
 class safe_open:
     def __init__(
         self,
-        filename,
-        framework,
-        device=...,
+        filename: str | os.PathLike[str],
+        framework: str,
+        device: str = ...,
         *,
         backend: str = ...,
     ) -> None: ...
-    def __enter__(self): ...
-    def __exit__(self, _exc_type, _exc_value, _traceback): ...
-    def get_slice(self, name): ...
-    def get_tensor(self, name): ...
+    def __enter__(self) -> Self: ...
+    def __exit__(
+        self,
+        _exc_type: object,
+        _exc_value: object,
+        _traceback: object,
+    ) -> None: ...
+    def get_slice(self, name: str): ...
+    def get_tensor(self, name: str) -> Tensor: ...
     def get_tensors(self): ...
-    def keys(self): ...
-    def metadata(self): ...
-    def offset_keys(self): ...
+    def keys(self) -> list[str]: ...
+    def metadata(self) -> dict[str, str] | None: ...
+    def offset_keys(self) -> list[str]: ...
 
 class SafetensorError(Exception): ...
