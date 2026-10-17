@@ -1,11 +1,9 @@
 from collections.abc import Iterator, Sequence
 from os import PathLike
-from typing import Protocol
 
-from pyarrow import Array, Table
+from pyarrow import Schema, Table
 
-class _RecordBatch(Protocol):
-    def column(self, i: int | str) -> Array: ...
+import pyarrow as pa
 
 class ColumnChunkMetaData:
     compression: str
@@ -21,6 +19,7 @@ class FileMetaData:
     def row_group(self, i: int) -> RowGroupMetaData: ...
 
 class ParquetFile:
+    schema_arrow: Schema
     metadata: FileMetaData
     num_row_groups: int
 
@@ -33,7 +32,7 @@ class ParquetFile:
         columns: Sequence[str] | None = None,
         use_threads: bool = True,
         use_pandas_metadata: bool = False,
-    ) -> Iterator[_RecordBatch]: ...
+    ) -> Iterator[pa.RecordBatch]: ...
 
 def read_table(
     source: str | PathLike[str],

@@ -1,4 +1,4 @@
-from typing import Any, Self
+from typing import Any, Literal, Self
 
 from pyarrow import compute as compute
 
@@ -14,6 +14,8 @@ class Field:
     type: DataType
 
 class Schema:
+    names: list[str]
+
     def field(self, name: str) -> Field: ...
 
 class NativeFile:
@@ -45,11 +47,21 @@ class Array:
     def as_py(self) -> Any: ...
     def to_pylist(self) -> list[Any]: ...
 
+class RecordBatch:
+    def column(self, i: int | str) -> Array: ...
+    def to_pylist(
+        self,
+        *,
+        maps_as_pydicts: Literal["lossy", "strict"] | None = None,
+    ) -> list[dict[str, object]]: ...
+
 class Table:
     column_names: list[str]
     num_rows: int
     schema: Schema
 
+    @classmethod
+    def from_pylist(cls, mapping: list[dict[str, object]]) -> Table: ...
     @classmethod
     def from_pandas(
         cls,
