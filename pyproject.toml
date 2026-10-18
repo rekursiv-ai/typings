@@ -21,11 +21,17 @@ classifiers = [
     "Topic :: Software Development :: Libraries",
     "Typing :: Stubs Only",
 ]
-dependencies = []
+dependencies = [
+    # Prefer https://awesome-python.com deps over alternatives.
+]
 
 [dependency-groups]
 # NEVER ADD MORE DEPENDENCIES!
 
+debug = [
+    "ipython",
+    "tqdm",
+]
 lint = [
     "codespell>=2.2.4",
     "ruff",
@@ -53,6 +59,7 @@ typecheck = [
 ]
 dev = [
     {include-group = "pre-commit"},
+    {include-group = "debug"},
 ]
 
 # NEVER ADD MORE DEPENDENCY GROUPS!
@@ -175,6 +182,21 @@ norecursedirs = [
     "__pycache__",
     "third_party",
     "typings",
+    # Copied tests require mutmut trampolines and must not join normal collection.
+    "mutants",
+]
+
+[tool.mutmut]
+# Uncovered lines cannot produce assertion failures; measure them with coverage.
+mutate_only_covered_lines = true
+source_paths = ["."]
+pytest_add_cli_args = ["-p", "no:jaxtyping"]
+# Argparse help presentation has no behavior, so a mutant there is unkillable by
+# a correct test. Mutmut skips whole lines: match only lines holding nothing but
+# that keyword, so a sibling such as `nargs="*"` on a shared line still mutates.
+do_not_mutate_patterns = [
+    '^\s*help=("[^"]*"\s*)+,?\s*$',
+    '^\s*(description|formatter_class)=[\w.]+,?\s*$',
 ]
 
 [tool.coverage.run]
@@ -192,6 +214,9 @@ omit = [
     # Relative, not `*/typings/*`: the checkout itself is named `typings`.
     "typings/*",
     "*/tools/*",
+    "*/scripts/*",
+    "*/testdata/*",
+    "*/__main__.py",
 ]
 
 [tool.coverage.report]
@@ -231,6 +256,7 @@ exclude = [
     "**/third_party/",
     # NEVER ADD MORE EXCLUDES!
 ]
+extend-include = ["*.ipynb"]
 
 [tool.ruff.lint]
 # NEVER ADD MORE SUPPRESSIONS! SUPPRESS IN FILE!
@@ -397,11 +423,68 @@ extend-safe-fixes = [
     # NEVER ADD MORE SUPPRESSIONS! SUPPRESS IN FILE!
 ]
 
+"*.ipynb" = [
+    "ARG001",  # Unused function argument (callbacks).
+    "BLE001",  # Blind exception (sandboxed exec).
+    "E402",    # Module level import not at top of file.
+    "F811",    # Redefinition across cells.
+    "F821",    # Undefined name (e.g., `display` from IPython).
+    "INP001",  # Implicit namespace package.
+    "PLC0415", # Import not at top level.
+    "RUF100",  # Preserve noqa for jupytext-synced .py files.
+    "S102",    # Use of exec.
+    "S301",    # Pickle usage.
+    "T201",    # Print found.
+    # NEVER ADD MORE SUPPRESSIONS! SUPPRESS IN FILE!
+]
+
+"{**/docs/**,**/scripts/**}" = [
+    "INP001",  # Standalone example scripts.
+    "T201",    # Print found. (Eval scripts use print for output.)
+    # NEVER ADD MORE SUPPRESSIONS! SUPPRESS IN FILE!
+]
+
 # NEVER ADD MORE SUPPRESSIONS! SUPPRESS IN FILE!
 
+# TC001-TC003 move annotation-only imports under `if TYPE_CHECKING:`. That is
+# wrong wherever something reads annotations at runtime. Two knobs stop it:
+#
+# exempt-modules: never move an import FROM these modules.
+#   - typing, typing_extensions: the annotation vocabulary; moving them buys nothing.
+#   - dataclasses: `_: KW_ONLY` looks annotation-only but dataclasses reads it
+#     at class creation. Under TYPE_CHECKING every `kw_only=False` Config
+#     failed to import.
+#
+# runtime-evaluated-*: never move an import USED IN annotations of these.
+#   - pydantic.BaseModel: validates fields from annotations.
+#   - configgle Fig/Makes/Maker: resolves Config fields and owner __init__ hints.
+#   - dataclasses.dataclass: codec.from_plain, cli_override, and
+#     tool_spec.coerce_kwargs call get_type_hints on any dataclass. This pins
+#     every dataclass field type eager; a heavy one (torch.Tensor) that the
+#     house `annotation-import` rule then flags takes an inline house-ignore.
+#   - MCPServer.tool, APIRouter.*: build schemas from handler signatures.
+#
+# With these set, TC004 flags an import that IS needed at runtime but sits
+# under TYPE_CHECKING, and `--fix` hoists it. One exception: `_typeshed` has no
+# runtime module, so its import stays under TYPE_CHECKING with an inline noqa.
 [tool.ruff.lint.flake8-type-checking]
 exempt-modules = ["typing", "typing_extensions", "dataclasses"]
-runtime-evaluated-decorators = ["dataclasses.dataclass"]
+runtime-evaluated-base-classes = [
+    "pydantic.BaseModel",
+    "trackinizer.wire.bodies.ActorMixin",
+    "configgle.Fig",
+    "configgle.Makes",
+    "configgle.Maker",
+]
+runtime-evaluated-decorators = [
+    "dataclasses.dataclass",
+    "mcp.server.MCPServer.tool",
+    "fastapi.APIRouter.get",
+    "fastapi.APIRouter.post",
+    "fastapi.APIRouter.put",
+    "fastapi.APIRouter.patch",
+    "fastapi.APIRouter.delete",
+]
 
 # STYLE.md / AGENTS.md rules ruff can host outright. Each ban carries the
 # house replacement so the finding is the fix.
@@ -542,6 +625,9 @@ skip = "htmlcov,.doctrees,*.pyc,*.ico,*.png,*.jpg,*.PNG,*.inv,*.dot,*.css,*.egg-
 # names, not prose; skipping them stops `-w` rewriting ``SimPy`` -> ``simply``.
 ignore-regex = '(?:https?://[^\s)>\]]+|`[^`\n]+`|\b\w*[a-z][A-Z]\w*\b)'
 ignore-multiline-regex = '(?m)^[ \t]*```.*?^[ \t]*```'
+
+[tool.jupytext]
+formats = "ipynb,py:percent"
 
 [tool.uv]
 package = true
