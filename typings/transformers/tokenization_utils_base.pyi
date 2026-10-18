@@ -81,6 +81,7 @@ class TokenSpan(NamedTuple):
     end: int
 
 class BatchEncoding(UserDict):
+    data: dict[str, object]
     def __init__(
         self,
         data: dict[str, Any] | None = ...,
@@ -160,6 +161,8 @@ class BatchEncoding(UserDict):
     ) -> BatchEncoding: ...
 
 class _SpecialTokensMixin:
+    pad_token: str | None
+    eos_token: str | None
     SPECIAL_TOKENS_ATTRIBUTES = ...
     def __init__(self, verbose=..., **kwargs) -> None: ...
     def sanitize_special_tokens(self) -> int: ...

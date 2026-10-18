@@ -5394,7 +5394,7 @@ def sparse_compressed_tensor(
 ) -> Tensor: ...
 def sparse_coo_tensor(
     indices: Tensor,
-    values: Tensor | list,
+    values: Tensor | Sequence[object],
     size: _size | None = ...,
     *,
     dtype: _dtype | None = ...,

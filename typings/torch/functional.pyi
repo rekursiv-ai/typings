@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import Any
+from typing import Any, Literal, overload
 
 from torch import Size, Tensor
 
@@ -61,7 +61,51 @@ istft = ...
 type _unique_impl_out = Any
 _return_inverse_false = ...
 _return_inverse_true = ...
-unique = ...
+
+@overload
+def unique(
+    input: Tensor,
+    sorted: bool = ...,
+    return_inverse: Literal[False] = ...,
+    return_counts: Literal[False] = ...,
+    dim: int | None = ...,
+) -> Tensor: ...
+@overload
+def unique(
+    input: Tensor,
+    sorted: bool = ...,
+    *,
+    return_inverse: Literal[True],
+    return_counts: Literal[False] = ...,
+    dim: int | None = ...,
+) -> tuple[Tensor, Tensor]: ...
+@overload
+def unique(
+    input: Tensor,
+    sorted: bool = ...,
+    return_inverse: Literal[False] = ...,
+    *,
+    return_counts: Literal[True],
+    dim: int | None = ...,
+) -> tuple[Tensor, Tensor]: ...
+@overload
+def unique(
+    input: Tensor,
+    sorted: bool = ...,
+    *,
+    return_inverse: Literal[True],
+    return_counts: Literal[True],
+    dim: int | None = ...,
+) -> tuple[Tensor, Tensor, Tensor]: ...
+@overload
+def unique(
+    input: Tensor,
+    sorted: bool = ...,
+    return_inverse: bool = ...,
+    return_counts: bool = ...,
+    dim: int | None = ...,
+) -> Tensor | tuple[Tensor, Tensor] | tuple[Tensor, Tensor, Tensor]: ...
+
 _consecutive_return_inverse_false = ...
 _consecutive_return_inverse_true = ...
 unique_consecutive = ...
