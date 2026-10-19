@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Protocol, cast
+from pathlib import Path
+from typing import Final, Protocol, cast
 
 import pytest
 
 from hatch_build import StubsBuildHook, layout
 
 
-if TYPE_CHECKING:
-    from pathlib import Path
+_CWD: Final = Path(__file__).resolve().parent
 
 
 class _Hook(Protocol):
@@ -65,6 +65,13 @@ def test_only_placeholder_trees_ship_as_shared_data(stubs: Path) -> None:
     assert shared_data == {
         str(stubs / "triton"): "share/rekursiv-ai-typings/triton",
     }
+
+
+def test_an_optional_import_ships_a_placeholder() -> None:
+    # Trackinizer imports aiortc under TYPE_CHECKING without depending on it.
+    stubs = _CWD / "typings"
+    _, shared_data = layout(stubs)
+    assert shared_data[str(stubs / "aiortc")] == "share/rekursiv-ai-typings/aiortc"
 
 
 def test_initialize_adds_the_layout_to_existing_build_data(stubs: Path) -> None:
