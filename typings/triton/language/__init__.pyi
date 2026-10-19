@@ -4,7 +4,10 @@ from typing_extensions import TypeVar
 
 import builtins
 
-from triton.language import standard as standard
+from triton.language import (
+    core as core,
+    standard as standard,
+)
 
 class dtype: ...
 
