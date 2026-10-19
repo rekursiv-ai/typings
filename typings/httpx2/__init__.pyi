@@ -88,6 +88,10 @@ class AsyncByteStream:
     async def aclose(self) -> None: ...
 
 class Timeout:
+    connect: float | None
+    read: float | None
+    write: float | None
+    pool: float | None
     def __init__(
         self,
         timeout: Any = ...,
