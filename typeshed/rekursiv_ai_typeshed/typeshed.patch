@@ -84,3 +84,23 @@
          """Return type hints for an object.
 
          This is often the same as inspect.get_annotations(obj) or obj.__annotations__,
+@@ -2639,7 +2639,7 @@
+             def __new__(cls, name: str, value: Any, *, type_params: tuple[_TypeParameter, ...] = ()) -> Self: ...
+
+         @property
+-        def __value__(self) -> Any: ...  # AnnotationForm
++        def __value__(self) -> object: ...  # AnnotationForm
+         @property
+         def __type_params__(self) -> tuple[_TypeParameter, ...]: ...
+         @property
+--- a/stdlib/typing_extensions.pyi
++++ b/stdlib/typing_extensions.pyi
+@@ -1442,7 +1442,7 @@
+             self, name: str, value: AnnotationForm, *, type_params: tuple[TypeVar | ParamSpec | TypeVarTuple, ...] = ()
+         ) -> None: ...
+         @property
+-        def __value__(self) -> AnnotationForm: ...
++        def __value__(self) -> object: ...  # AnnotationForm
+         @property
+         def __type_params__(self) -> tuple[TypeVar | ParamSpec | TypeVarTuple, ...]: ...
+         @property
