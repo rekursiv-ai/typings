@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import TypedDict
 
+from e2b.api.client.models import SandboxState
+
 class SandboxNetworkOpts(TypedDict, total=False):
     allow_public_traffic: bool
     allow_out: list[str]
@@ -23,6 +25,7 @@ class SandboxInfo:
     metadata: dict[str, str]
     started_at: datetime
     end_at: datetime
+    state: SandboxState
 
 class SandboxQuery:
     metadata: dict[str, str] | None
