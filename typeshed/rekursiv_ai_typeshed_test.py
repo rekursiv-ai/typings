@@ -96,6 +96,14 @@ def test_email_content_methods_are_annotated(
     assert found == methods
 
 
+@pytest.mark.parametrize("checker", ["ty", "basedpyright"])
+@pytest.mark.parametrize("module", ["typing", "typing_extensions"])
+def test_installed_type_alias_value_is_object(checker: str, module: str) -> None:
+    text = (_INSTALLED / checker / "stdlib" / f"{module}.pyi").read_text()
+    values = re.findall(r"def __value__\(self\) -> (\w+):", text)
+    assert values == ["object"], values
+
+
 def test_the_patch_leaves_inspect_unwrap_alone() -> None:
     # ``unwrap`` follows ``__wrapped__`` to a different object, so ``-> _F`` lies.
     assert "stdlib/inspect.pyi" not in _PATCH.read_text()
