@@ -1,3 +1,5 @@
+from collections.abc import Callable
+
 from torch import Tensor
 
 import torch
@@ -19,4 +21,4 @@ class LBFGS(Optimizer):
         line_search_fn: str | None = ...,
     ) -> None: ...
     @torch.no_grad()
-    def step(self, closure): ...
+    def step(self, closure: Callable[[], Tensor | float]) -> Tensor | float: ...
