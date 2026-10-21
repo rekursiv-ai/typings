@@ -60,8 +60,11 @@ class _SingleLevelFunction(
     _HookMixin,
     metaclass=FunctionMeta,
 ):
-    @staticmethod
-    def forward(*args: Any, **kwargs: Any) -> Any: ...
+    # Read-only, so subclasses may define ``forward`` as a static or a class
+    # method of any signature: ty checks a writable attribute's overrides
+    # invariantly.
+    @property
+    def forward(self) -> Callable[..., Any]: ...
 
     # Autograd invokes these positionally, so the parameter NAMES must not
     # bind: an override is free to call the context `context` rather than

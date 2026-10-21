@@ -26,9 +26,10 @@ def layout(stubs: Path) -> tuple[dict[str, str], dict[str, str]]:
         # `py.typed` saying `partial` marks a tree that stubs only some
         # modules, so the checkers fall back to the library for the rest.
         if path.suffix in {".py", ".pyi"} or path.name == "py.typed":
-            force_include[str(path)] = str(
-                Path(f"{rel.parts[0]}-stubs", *rel.parts[1:]),
-            )
+            # A tree already named ``<pkg>-stubs`` (pyrefly treats only those
+            # as typed) ships under that name.
+            package = f"{rel.parts[0].removesuffix('-stubs')}-stubs"
+            force_include[str(path)] = str(Path(package, *rel.parts[1:]))
     # A `-stubs` package resolves `.pyi` only, so a `.py` placeholder (triton's,
     # for a linux-only wheel) never reaches basedpyright's
     # `reportMissingModuleSource` check from there; the shared copy is what a
