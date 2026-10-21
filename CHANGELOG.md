@@ -6,6 +6,14 @@ All notable typings changes are documented here. This project follows
 Both packages in this repository, `rekursiv-ai-typings` and
 `rekursiv-ai-typeshed`, share one version and one release tag.
 
+## 0.1.7 - 2026-10-21
+
+### Changed
+
+- Stubs for h5py `Dataset.chunks` and starlette's `TestClient.websocket_connect`
+  with its `WebSocketTestSession`.
+- The `typecheck` group requires `rekursiv-ai-typeshed` 0.1.6 or later.
+
 ## 0.1.6 - 2026-10-20
 
 ### Changed
