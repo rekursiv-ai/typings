@@ -6,6 +6,12 @@ All notable typings changes are documented here. This project follows
 Both packages in this repository, `rekursiv-ai-typings` and
 `rekursiv-ai-typeshed`, share one version and one release tag.
 
+## 0.1.6 - 2026-10-20
+
+### Changed
+
+- Stubs for the Torch device, the LBFGS step closure, and alias values.
+
 ## 0.1.5 - 2026-10-17
 
 ### Changed

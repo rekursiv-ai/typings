@@ -3,7 +3,7 @@
 
 [project]
 name = "rekursiv-ai-typings"
-version = "0.1.5"
+version = "0.1.6"
 description = "Hand-written type stubs for third-party libraries, for basedpyright and ty."
 readme = "README.md"
 requires-python = ">=3.12"
