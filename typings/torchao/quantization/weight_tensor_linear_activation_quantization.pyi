@@ -6,8 +6,8 @@ from torchao.utils import TorchAOBaseTensor
 import torch
 
 __all__ = [
-    ...,
-    ...,
+    "WeightTensorWithLinearActivationQuantizationMetadata",
+    "to_weight_tensor_with_linear_activation_quantization_metadata",
 ]
 aten = ...
 

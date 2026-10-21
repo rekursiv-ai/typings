@@ -30,7 +30,7 @@ __all__ = [
     "disable_observer",
     "enable_fake_quant",
     "enable_observer",
-    ...,
+    "fused_per_channel_wt_fake_quant_range_neg_127_to_127",
     "fused_wt_fake_quant_range_neg_127_to_127",
 ]
 

@@ -4,7 +4,7 @@ import torch
 
 __all__ = [
     "WeightTensorWithLinearActivationScaleMetadata",
-    ...,
+    "to_weight_tensor_with_linear_activation_scale_metadata",
 ]
 aten = ...
 

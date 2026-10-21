@@ -53,6 +53,20 @@ def test_each_tree_ships_as_its_stubs_package(stubs: Path) -> None:
     assert str(stubs / "yaml" / "notes.txt") not in force_include
 
 
+def test_a_tree_already_named_as_stubs_ships_under_its_own_name(tmp_path: Path) -> None:
+    stub = tmp_path / "typings" / "tqdm-stubs" / "__init__.pyi"
+    stub.parent.mkdir(parents=True)
+    stub.write_text("")
+    force_include, _ = layout(tmp_path / "typings")
+    assert force_include == {str(stub): "tqdm-stubs/__init__.pyi"}
+
+
+def test_the_shipped_wheel_holds_yaml_stubs() -> None:
+    """The export workflow greps the wheel for this path."""
+    force_include, _ = layout(_CWD / "typings")
+    assert "yaml-stubs/__init__.pyi" in force_include.values()
+
+
 def test_a_partial_tree_keeps_its_marker(stubs: Path) -> None:
     force_include, _ = layout(stubs)
     assert (

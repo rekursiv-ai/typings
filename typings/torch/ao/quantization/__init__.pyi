@@ -127,7 +127,6 @@ __all__ = [
     "fuse_linear_bn",
     "fuse_modules",
     "fuse_modules_qat",
-    ...,
     "fused_wt_fake_quant_range_neg_127_to_127",
     "generate_numeric_debug_handle",
     "get_block_size",

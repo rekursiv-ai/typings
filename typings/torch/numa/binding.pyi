@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import TypeVar
 
-__all__ = ["AffinityMode", "NumaOptions", ...]
+__all__ = ["AffinityMode", "NumaOptions"]
 logger = ...
 
 class AffinityMode(StrEnum):

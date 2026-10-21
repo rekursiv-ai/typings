@@ -32,6 +32,10 @@ from matplotlib.transforms import Transform
 from matplotlib.typing import ColorType, CoordsType, LineStyleType, MarkerType
 from numpy.typing import ArrayLike
 
+import matplotlib.stackplot as mstack
+import matplotlib.streamplot as mstream
+import matplotlib.table as mtable
+import matplotlib.tri as mtri
 import numpy as np
 import PIL.Image
 
@@ -816,10 +820,10 @@ class Axes(_AxesBase):
         side: Literal["both", "low", "high"] = ...,
     ) -> dict[str, Collection]: ...
 
-    table = ...
-    stackplot = ...
-    streamplot = ...
-    tricontour = ...
-    tricontourf = ...
-    tripcolor = ...
-    triplot = ...
+    table = mtable.table
+    stackplot = mstack.stackplot
+    streamplot = mstream.streamplot
+    tricontour = mtri.tricontour
+    tricontourf = mtri.tricontourf
+    tripcolor = mtri.tripcolor
+    triplot = mtri.triplot

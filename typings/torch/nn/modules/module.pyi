@@ -22,7 +22,8 @@ type _grad_t = tuple[Tensor, ...] | Tensor
 T = TypeVar("T", bound=Module)
 
 class _HasForward[**P, R](Protocol):
-    def forward(self, *args: P.args, **kwargs: P.kwargs) -> R: ...
+    @property
+    def forward(self) -> Callable[P, R]: ...
 
 class _IncompatibleKeys(NamedTuple):
     missing_keys: list[str]
@@ -295,4 +296,7 @@ class Module:
         options: dict[str, str | int | bool | Callable[..., Any]] | None = ...,
         disable: bool = ...,
     ) -> None: ...
-    forward: Callable[..., Any]
+    # Read-only, so a subclass may narrow it to any signature: ty checks a
+    # writable attribute's overrides invariantly.
+    @property
+    def forward(self) -> Callable[..., Any]: ...
