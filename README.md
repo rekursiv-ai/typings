@@ -85,9 +85,3 @@ extraPaths = [".venv/share/rekursiv-ai-typings"]
 
 The placeholders only make the import resolve. The types still come from our
 stubs.
-
-### Patched standard library
-
-`rekursiv-ai-typeshed`, in `typeshed/`, is a separate package from this repo.
-It fixes the standard-library stubs so that `x ** 0.5` is a `float` rather
-than `Any`. See `typeshed/README.md`.

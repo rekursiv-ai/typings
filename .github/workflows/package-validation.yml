@@ -52,8 +52,6 @@ jobs:
           uv sync --frozen --all-groups
           uv run pre-commit run --all-files --hook-stage pre-commit
           uv run pre-commit run --all-files --hook-stage pre-push
-          uv run python -c "import rekursiv_ai_typeshed"
           rm -rf dist
           uv build --out-dir dist
-          uv build --sdist --no-config --out-dir dist typeshed
           wheels=(dist/rekursiv_ai_typings-*.whl); wheel="${wheels[0]}"; uv run python -m zipfile -l "$wheel" | grep -q 'yaml-stubs/__init__.pyi'

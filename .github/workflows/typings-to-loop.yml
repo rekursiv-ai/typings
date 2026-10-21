@@ -252,10 +252,8 @@ jobs:
             --validation-command 'uv sync --frozen --all-groups' \
             --validation-command 'uv run pre-commit run --all-files --hook-stage pre-commit' \
             --validation-command 'uv run pre-commit run --all-files --hook-stage pre-push' \
-            --validation-command 'uv run python -c "import rekursiv_ai_typeshed"' \
             --validation-command 'rm -rf dist' \
             --validation-command 'uv build --out-dir dist' \
-            --validation-command 'uv build --sdist --no-config --out-dir dist typeshed' \
             --validation-command 'wheels=(dist/rekursiv_ai_typings-*.whl); wheel="${wheels[0]}"; uv run python -m zipfile -l "$wheel" | grep -q '"'"'yaml-stubs/__init__.pyi'"'"'' \
             --open-pr false
 
