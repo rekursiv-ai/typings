@@ -28,14 +28,11 @@ jobs:
       - name: Build package
         run: |
           uv build --out-dir dist
-          # Sdist only: its build copies the stdlib out of the installer's own
-          # checkers. `--no-config`: the root's `match-runtime` settings need
-          # static metadata this hook-built package does not declare.
-          uv build --sdist --no-config --out-dir dist typeshed
 
       - name: Validate built package
         run: |
-          uv run python -c "import rekursiv_ai_typeshed; print(rekursiv_ai_typeshed.__file__)"
+          wheels=(dist/rekursiv_ai_typings-*.whl)
+          uv run python -m zipfile -l "${wheels[0]}" | grep -q 'yaml-stubs/__init__.pyi'
 
       - name: Publish package
         uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2

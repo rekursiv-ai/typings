@@ -42,15 +42,11 @@ test = [
     "pytest>=7.0",
     "pytest-cov",
     "nodejs-wheel-binaries>=24.16.0",
-    # build.py decodes ty's Zstandard archive with it below Python 3.14.
-    "backports.zstd; python_version < '3.14'",
 ]
 typecheck = [
     "basedpyright>=1.40.1",
     "pyrefly>=1.4.0",
     "ty>=0.0.84",
-    # Extra.
-    "rekursiv-ai-typeshed>=0.1.6",
     "hatchling>=1.32.4",  # hatch_build.py subscripts its one-parameter BuildHookInterface.
 ]
 "pre-commit" = [
@@ -508,7 +504,7 @@ from-first = true
 lines-between-types = 1
 lines-after-imports = 2
 extra-standard-library = ["typing", "typing_extensions", "ty_extensions"]
-known-first-party = ["hatch_build", "lib", "rekursiv_ai_typeshed"]
+known-first-party = ["hatch_build", "lib"]
 no-lines-before = ["future"]
 order-by-type = true
 relative-imports-order = "closest-to-furthest"
@@ -532,11 +528,6 @@ stubPath = "typings"
 # `reportMissingModuleSource` on macOS. Stubs still win over source, so no type
 # changes. Mirrors [tool.ty.environment].
 extraPaths = ["typings"]
-# `rekursiv-ai-typeshed` (a `typecheck` dependency): the checkers' bundled stdlib
-# with `int`/`float` `__pow__` returning `float` rather than typeshed's `Any`,
-# which would otherwise make every `x ** 0.5` a `reportAny` violation.
-# `uv sync` installs it as shared data at this path.
-typeshedPath = ".venv/share/rekursiv-ai-typeshed/basedpyright"
 # `exclude` and `ignore` are the SAME list on purpose. `exclude` stops a path
 # from being a checked source; `ignore` also silences diagnostics when an
 # included file imports it. Pyright has no single key for both, so keep them
@@ -582,8 +573,6 @@ reportInvalidCast = false                  # All cast() calls are intentional.
 
 [tool.ty.environment]
 python-version = "3.12"  # Intentional; test at 3.12 for exports.
-# Same patch as `[tool.basedpyright] typeshedPath`, with ty's real `ty_extensions`.
-typeshed = ".venv/share/rekursiv-ai-typeshed/ty"
 extra-paths = ["typings"]
 
 # Mirrors `[tool.basedpyright] exclude`, minus entries ty never walks anyway
@@ -636,12 +625,9 @@ project-excludes = [
     "**/third_party/",
     "typings/",
     "**/.export/typings/",
-    "**/rekursiv_ai_typeshed/typings/",
     "website/rekursiv-ai.github.io/_site/",
 ]
 search-path = ["typings"]
-# No `typeshed-path`: ty's tree (`[tool.ty.environment] typeshed`) makes pyrefly
-# 1.4.0 flag every `-> Self` call as an unused coroutine (879 false positives).
 # Pinned beside the config: an interpreter found through a symlinked home splits
 # site-packages from the typeshed, and `pathlib.Path` stops matching `PathLike`.
 python-interpreter-path = ".venv/bin/python"
@@ -686,14 +672,5 @@ required-environments = [
     "sys_platform == 'darwin' and platform_machine == 'arm64'",
 ]
 
-[tool.uv.extra-build-dependencies]
-rekursiv-ai-typeshed = [
-    {requirement = "basedpyright", match-runtime = true},
-    {requirement = "ty", match-runtime = true},
-]
-
 [tool.uv.pip]
 compile-bytecode = true
-
-[tool.uv.sources]
-rekursiv-ai-typeshed = { path = "typeshed" }

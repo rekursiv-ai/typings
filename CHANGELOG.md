@@ -3,8 +3,12 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-Both packages in this repository, `rekursiv-ai-typings` and
-`rekursiv-ai-typeshed`, share one version and one release tag.
+## Unreleased
+
+### Removed
+
+- `rekursiv-ai-typeshed`, the patched standard-library stubs. Neither ty nor
+  pyrefly needs them; cast a numeric `**` with `float(...)` instead.
 
 ## 0.1.7 - 2026-10-21
 
