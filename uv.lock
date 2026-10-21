@@ -582,7 +582,7 @@ wheels = [
 
 [[package]]
 name = "rekursiv-ai-typeshed"
-version = "0.1.6"
+version = "0.1.7"
 source = { directory = "typeshed" }
 dependencies = [
     { name = "basedpyright" },
@@ -597,7 +597,7 @@ requires-dist = [
 
 [[package]]
 name = "rekursiv-ai-typings"
-version = "0.1.6"
+version = "0.1.7"
 source = { editable = "." }
 
 [package.dev-dependencies]
