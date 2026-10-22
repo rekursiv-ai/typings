@@ -7,6 +7,7 @@ from collections.abc import (
     Iterator,
     Mapping,
 )
+from http.cookiejar import CookieJar
 from typing import Any, Self
 
 import types
@@ -28,7 +29,7 @@ type HeaderTypes = (
     | list[tuple[str, str]]
     | list[tuple[bytes, bytes]]
 )
-type CookieTypes = Cookies | dict[str, str] | list[tuple[str, str]]
+type CookieTypes = Cookies | CookieJar | dict[str, str] | list[tuple[str, str]]
 type RequestContent = str | bytes | Iterable[bytes] | AsyncIterable[bytes]
 type RequestData = Mapping[str, Any]
 type RequestFiles = Mapping[str, Any] | list[tuple[str, Any]]
