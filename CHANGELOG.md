@@ -3,6 +3,13 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.9 - 2026-10-23
+
+### Changed
+
+- The httpx2 `QueryParams` stub is a `Mapping[str, str]`, with `__iter__` and
+  `__len__`, and `get` defaults to `None`.
+
 ## 0.1.8 - 2026-10-23
 
 ### Removed
