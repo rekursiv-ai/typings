@@ -74,6 +74,8 @@ def register_module_full_backward_hook(
     hook: Callable[[Module, _grad_t, _grad_t], _grad_t | None],
 ) -> RemovableHandle: ...
 
+_forward_unimplemented: Callable[..., Any]
+
 class Module:
     dump_patches: bool = ...
     _version: int = ...
@@ -296,7 +298,6 @@ class Module:
         options: dict[str, str | int | bool | Callable[..., Any]] | None = ...,
         disable: bool = ...,
     ) -> None: ...
-    # Read-only, so a subclass may narrow it to any signature: ty checks a
-    # writable attribute's overrides invariantly.
-    @property
-    def forward(self) -> Callable[..., Any]: ...
+    # Undeclared, as torch binds it: a declared attribute's overrides are checked
+    # invariantly by ty, and basedpyright lets no method override a property.
+    forward = _forward_unimplemented
