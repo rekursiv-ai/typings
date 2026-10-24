@@ -1,4 +1,4 @@
-from bashlex import ast
+from bashlex import ast as ast
 
 def parse(
     s: str,
