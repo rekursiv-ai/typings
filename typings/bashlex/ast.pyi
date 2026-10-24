@@ -1,17 +1,30 @@
 from typing import LiteralString
 
+import builtins
+
 class node:
     kind: str
     # present on command, pipeline, list, word nodes
-    parts: list[node]
+    parts: builtins.list[node]
     # present on word and assignment nodes
     word: str
     # present on compound nodes (subshells, group commands)
-    list: list[node]
+    list: builtins.list[node]
     # present on commandsubstitution and processsubstitution nodes
     command: node
     # present on operator nodes (&&, ||, ;)
     op: str
+    # present on redirect nodes: the source fd (None is the default) and kind
+    input: int | None
+    type: str
+    # present on redirect nodes: a word, the fd of ``>&1``, or the ``-`` of ``>&-``
+    output: node | int | str
+    # present on redirect nodes: the document of a ``<<``, else None
+    heredoc: node | None
+    # present on heredoc nodes: the document, its terminator appended
+    value: str
+    # present on compound nodes
+    redirects: builtins.list[node]
     # character position span
     pos: tuple[int, int]
 

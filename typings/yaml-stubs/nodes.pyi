@@ -21,6 +21,7 @@ class Node:
 
 class ScalarNode(Node):
     id: ClassVar[str]
+    value: str
     style: str | Any
     def __init__(
         self,
@@ -44,6 +45,8 @@ class CollectionNode(Node):
 
 class SequenceNode(CollectionNode):
     id: ClassVar[str]
+    value: list[Node]
 
 class MappingNode(CollectionNode):
     id: ClassVar[str]
+    value: list[tuple[Node, Node]]
