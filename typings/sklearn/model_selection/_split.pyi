@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 from collections.abc import Generator
-from typing import Any
+from typing import Any, TypeVar, overload
 
 from _typeshed import Incomplete
 from sklearn.utils.metadata_routing import _MetadataRequester
@@ -210,6 +210,21 @@ class _CVIterableWrapper(BaseCrossValidator):
     def split(self, X=None, y=None, groups=None) -> Generator[Incomplete]: ...
 
 def check_cv(cv: int = 5, y=None, *, classifier: bool = False): ...
+
+_ArrayT = TypeVar("_ArrayT")
+
+@overload
+def train_test_split(
+    array: _ArrayT,
+    /,
+    *,
+    test_size: Any = None,
+    train_size: Any = None,
+    random_state: Any = None,
+    shuffle: bool = True,
+    stratify: Any = None,
+) -> list[_ArrayT]: ...
+@overload
 def train_test_split(
     *arrays: Any,
     test_size: Any = None,

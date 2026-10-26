@@ -45,7 +45,7 @@ def roc_auc_score(
     max_fpr: Any = None,
     multi_class: str = "raise",
     labels: Any = None,
-) -> Any: ...
+) -> float: ...
 def confusion_matrix_at_thresholds(
     y_true,
     y_score,

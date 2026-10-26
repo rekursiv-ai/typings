@@ -165,6 +165,12 @@ def save(
     _use_new_zipfile_serialization: bool = ...,
     _disable_byteorder_record: bool = ...,
 ) -> None: ...
+
+# `object`, not torch's `Any`: the payload's schema is the writer's. A reader
+# writes `cast(T, torch.load(...))` with the writer's TypedDict, or narrows a
+# lone tensor with `isinstance`. `treekle.from_plain` reads only a payload the
+# writer saved as `to_plain(x)`; over a raw one it checks no tensor shape and
+# rejects a file saved before the writer added a key.
 def load(
     f: FileLike,
     map_location: MAP_LOCATION = ...,
@@ -173,7 +179,7 @@ def load(
     weights_only: bool | None = ...,
     mmap: bool | None = ...,
     **pickle_load_args: Any,
-) -> Any: ...
+) -> object: ...
 
 class StorageType:
     def __init__(self, name) -> None: ...

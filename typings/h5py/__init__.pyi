@@ -1,8 +1,9 @@
 from collections.abc import Iterator, Mapping, MutableMapping
-from types import TracebackType
-from typing import Any, Self
+from types import EllipsisType, TracebackType
+from typing import Any, Self, overload
 
 from numpy import bytes_, dtype, generic, object_
+from numpy.typing import NDArray
 
 __version__: str
 
@@ -19,6 +20,14 @@ class Dataset:
     def chunks(self) -> tuple[int, ...] | None: ...
     dtype: dtype[generic]
     attrs: MutableMapping[str, object]
+    @overload
+    def __getitem__(self, key: int | tuple[int, ...]) -> Any: ...
+    @overload
+    def __getitem__(
+        self,
+        key: slice | EllipsisType | tuple[slice | int | EllipsisType, ...],
+    ) -> NDArray[Any]: ...
+    @overload
     def __getitem__(self, key: Any) -> Any: ...
     def __setitem__(self, key: Any, value: Any) -> None: ...
     def __len__(self) -> int: ...

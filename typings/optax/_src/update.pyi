@@ -1,6 +1,6 @@
-from optax._src.base import Params, Updates
+from optax._src.base import Params
 
-def apply_updates(params: Params, updates: Updates) -> Params: ...
+def apply_updates[T](params: T, updates: T) -> T: ...
 def incremental_update(
     new_tensors: Params,
     old_tensors: Params,

@@ -1,6 +1,6 @@
-from collections.abc import Generator
+from collections.abc import Generator, Iterable, Iterator
 from contextlib import contextmanager
-from typing import Any
+from typing import Any, Generic, NoReturn, Self, TypeVar, overload
 
 import types
 
@@ -72,7 +72,9 @@ class EMA:
     def __init__(self, smoothing: float = 0.3) -> None: ...
     def __call__(self, x=None): ...
 
-class tqdm(Comparable):
+_T = TypeVar("_T")
+
+class tqdm(Comparable, Generic[_T]):
     monitor_interval: int
     monitor: Incomplete
     @staticmethod
@@ -101,7 +103,7 @@ class tqdm(Comparable):
         colour=None,
         **extra_kwargs,
     ): ...
-    def __new__(cls, *_, **__): ...
+    def __new__(cls, *_: object, **__: object) -> Self: ...
     @classmethod
     def write(
         cls,
@@ -154,9 +156,41 @@ class tqdm(Comparable):
     sp: Incomplete
     last_print_t: Incomplete
     start_t: Incomplete
+    @overload
     def __init__(
         self,
-        iterable: Any = None,
+        iterable: Iterable[_T],
+        desc: str | None = None,
+        total: float | None = None,
+        leave: bool = True,
+        file: Any = None,
+        ncols: int | None = None,
+        mininterval: float = 0.1,
+        maxinterval: float = 10.0,
+        miniters: Any = None,
+        ascii: Any = None,
+        disable: bool = False,
+        unit: str = "it",
+        unit_scale: bool = False,
+        dynamic_ncols: bool = False,
+        smoothing: float = 0.3,
+        bar_format: str | None = None,
+        initial: float = 0,
+        position: int | None = None,
+        postfix: Any = None,
+        unit_divisor: int = 1000,
+        write_bytes: bool = False,
+        lock_args: Any = None,
+        nrows: int | None = None,
+        colour: str | None = None,
+        delay: float = 0.0,
+        gui: bool = False,
+        **kwargs: Any,
+    ) -> None: ...
+    @overload
+    def __init__(
+        self: tqdm[NoReturn],
+        iterable: None = None,
         desc: str | None = None,
         total: float | None = None,
         leave: bool = True,
@@ -188,7 +222,7 @@ class tqdm(Comparable):
     def __len__(self) -> int: ...
     def __reversed__(self) -> Any: ...
     def __contains__(self, item: Any) -> bool: ...
-    def __enter__(self) -> tqdm[Any]: ...
+    def __enter__(self) -> Self: ...
     def __exit__(
         self,
         exc_type: type[BaseException] | None,
@@ -197,7 +231,7 @@ class tqdm(Comparable):
     ) -> None: ...
     def __del__(self) -> None: ...
     def __hash__(self) -> int: ...
-    def __iter__(self) -> Any: ...
+    def __iter__(self) -> Iterator[_T]: ...
     def update(self, n: float = 1) -> bool | None: ...
     def close(self) -> None: ...
     def clear(self, nolock: bool = False) -> None: ...

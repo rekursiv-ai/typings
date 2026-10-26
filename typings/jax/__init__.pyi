@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from typing import Any, Protocol
+from typing import Any, Protocol, overload
 
 from _typeshed import Incomplete
 from jax import (
@@ -14,6 +14,7 @@ from jax._src.api import (
     eval_shape as eval_shape,
     named_scope as named_scope,
 )
+from jax._src.basearray import Array as Array
 from jax._src.stages import Lowered, Traced
 from jax.interpreters import (
     ad as ad,
@@ -24,7 +25,6 @@ from jax.interpreters import (
     xla as xla,
 )
 
-Array: Incomplete
 Device: Incomplete
 device_put_replicated: Incomplete
 device_put_sharded: Incomplete
@@ -67,6 +67,13 @@ def grad(
     *args: Any,
     **kwargs: Any,
 ) -> Callable[..., Any]: ...
+@overload
+def value_and_grad[T, R](
+    __fun: Callable[[T], R],
+    *args: Any,
+    **kwargs: Any,
+) -> Callable[[T], tuple[R, T]]: ...
+@overload
 def value_and_grad(
     __fun: Callable[..., Any],
     *args: Any,
