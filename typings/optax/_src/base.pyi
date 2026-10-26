@@ -1,20 +1,29 @@
-from typing import Any, NamedTuple
+from typing import Any, NamedTuple, Protocol
+
+class TransformInitFn(Protocol):
+    def __call__[T](self, params: T) -> OptState: ...
+
+class TransformUpdateFn(Protocol):
+    def __call__[T](
+        self,
+        updates: T,
+        state: OptState,
+        params: T | None = None,
+    ) -> tuple[T, OptState]: ...
 
 class GradientTransformation(NamedTuple):
-    init: Any
-    update: Any
+    init: TransformInitFn
+    update: TransformUpdateFn
 
 class GradientTransformationExtraArgs(GradientTransformation):
     update: Any
 
 type EmptyState = Any
-type OptState = Any
+type OptState = object
 type Params = Any
 type Updates = Any
 type ScalarOrSchedule = float | Any
 type Schedule = Any
-type TransformInitFn = Any
-type TransformUpdateFn = Any
 type TransformUpdateExtraArgsFn = Any
 type MaskOrFn = Any
 

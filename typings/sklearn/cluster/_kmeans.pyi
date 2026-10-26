@@ -4,6 +4,7 @@ from typing import Self
 import abc
 
 from _typeshed import Incomplete
+from numpy.typing import NDArray
 from sklearn.base import (
     BaseEstimator as BaseEstimator,
     ClassNamePrefixFeaturesOutMixin as ClassNamePrefixFeaturesOutMixin,
@@ -39,6 +40,8 @@ from sklearn.utils.validation import (
     check_is_fitted as check_is_fitted,
     validate_data as validate_data,
 )
+
+import numpy as np
 
 def kmeans_plusplus(
     X,
@@ -115,7 +118,7 @@ class KMeans(_BaseKMeans):
         algorithm: str = "lloyd",
     ) -> None: ...
     cluster_centers_: Incomplete
-    labels_: Incomplete
+    labels_: NDArray[np.int32]
     inertia_: Incomplete
     n_iter_: Incomplete
     def fit(

@@ -4,6 +4,7 @@ from typing import Self
 import abc
 
 from _typeshed import Incomplete
+from numpy.typing import NDArray
 from sklearn.base import (
     MultiOutputMixin as MultiOutputMixin,
     RegressorMixin as RegressorMixin,
@@ -42,6 +43,8 @@ from sklearn.utils.validation import (
     has_fit_parameter as has_fit_parameter,
     validate_data as validate_data,
 )
+
+import numpy as np
 
 def lasso_path(
     X,
@@ -107,7 +110,7 @@ class ElasticNet(MultiOutputMixin, RegressorMixin, LinearModel):
         selection: str = "cyclic",
     ) -> None: ...
     n_iter_: Incomplete
-    coef_: Incomplete
+    coef_: NDArray[np.float32 | np.float64]
     dual_gap_: Incomplete
     def fit(
         self,
