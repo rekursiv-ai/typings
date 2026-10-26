@@ -1,7 +1,7 @@
 from collections.abc import Callable, Iterable, Iterator, Sequence
 from typing import Any, Literal, TypeVar, overload
 
-import datetime
+import datetime as dt
 
 from cycler import Cycler
 from matplotlib import cbook
@@ -30,7 +30,7 @@ import matplotlib.artist as martist
 import numpy as np
 
 _T = TypeVar("_T", bound=Artist)
-type _AxisValue = float | int | str | datetime.date | datetime.datetime | np.datetime64
+type _AxisValue = float | int | str | dt.date | dt.datetime | np.datetime64
 
 class _axis_method_wrapper:
     attr_name: str
@@ -488,5 +488,5 @@ class _AxesBase(martist.Artist):
         fontdict: dict[str, Any] | None = ...,
         **kwargs: Any,
     ) -> list[Text]: ...
-    def xaxis_date(self, tz: str | datetime.tzinfo | None = ...) -> None: ...
-    def yaxis_date(self, tz: str | datetime.tzinfo | None = ...) -> None: ...
+    def xaxis_date(self, tz: str | dt.tzinfo | None = ...) -> None: ...
+    def yaxis_date(self, tz: str | dt.tzinfo | None = ...) -> None: ...

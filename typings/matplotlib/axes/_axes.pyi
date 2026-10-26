@@ -1,7 +1,7 @@
 from collections.abc import Callable, Iterable, Sequence
 from typing import Any, Literal, overload
 
-import datetime
+import datetime as dt
 
 from matplotlib.artist import Artist
 from matplotlib.axes._base import _AxesBase
@@ -39,7 +39,7 @@ import matplotlib.tri as mtri
 import numpy as np
 import PIL.Image
 
-type _DataScalar = float | int | str | datetime.date | datetime.datetime | np.datetime64
+type _DataScalar = float | int | str | dt.date | dt.datetime | np.datetime64
 type _DataLike = _DataScalar | Sequence[_DataScalar | None] | ArrayLike
 
 class Axes(_AxesBase):
@@ -235,7 +235,7 @@ class Axes(_AxesBase):
         x: ArrayLike,
         y: ArrayLike,
         fmt: str = ...,
-        tz: str | datetime.tzinfo | None = ...,
+        tz: str | dt.tzinfo | None = ...,
         xdate: bool = ...,
         ydate: bool = ...,
         *,

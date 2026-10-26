@@ -2,7 +2,7 @@ from collections.abc import Callable, Iterable, Mapping
 from types import BuiltinFunctionType, FunctionType, ModuleType
 from typing import ClassVar, Never, Self, TypeVar
 
-import datetime
+import datetime as dt
 
 from _typeshed import Incomplete, ReadableBuffer, SupportsItems
 from yaml.error import YAMLError as YAMLError
@@ -87,8 +87,8 @@ class SafeRepresenter(BaseRepresenter):
         | Iterable[tuple[Incomplete, Incomplete]],
     ) -> MappingNode: ...
     def represent_set(self, data: Iterable[Incomplete]) -> MappingNode: ...
-    def represent_date(self, data: datetime.date) -> ScalarNode: ...
-    def represent_datetime(self, data: datetime.datetime) -> ScalarNode: ...
+    def represent_date(self, data: dt.date) -> ScalarNode: ...
+    def represent_datetime(self, data: dt.datetime) -> ScalarNode: ...
     def represent_yaml_object(
         self,
         tag: str,

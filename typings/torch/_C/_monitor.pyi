@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from enum import Enum
 
-import datetime
+import datetime as dt
 import types
 
 class Aggregation(Enum):
@@ -27,12 +27,12 @@ class Stat:
 
 class Event:
     name: str
-    timestamp: datetime.datetime
+    timestamp: dt.datetime
     data: dict[str, int | float | bool | str]
     def __init__(
         self,
         name: str,
-        timestamp: datetime.datetime,
+        timestamp: dt.datetime,
         data: dict[str, int | float | bool | str],
     ) -> None: ...
 

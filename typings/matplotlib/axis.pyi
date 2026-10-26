@@ -1,7 +1,7 @@
 from collections.abc import Callable, Iterable, Sequence
 from typing import Any, Literal, Self, overload
 
-import datetime
+import datetime as dt
 
 from matplotlib import cbook
 from matplotlib.axes import Axes
@@ -264,7 +264,7 @@ class Axis(martist.Artist):
         minor: bool = ...,
         **kwargs: Any,
     ) -> list[Tick]: ...
-    def axis_date(self, tz: str | datetime.tzinfo | None = ...) -> None: ...
+    def axis_date(self, tz: str | dt.tzinfo | None = ...) -> None: ...
     def get_tick_space(self) -> int: ...
     def get_label_position(self) -> Literal["top", "bottom"]: ...
     def set_label_position(
