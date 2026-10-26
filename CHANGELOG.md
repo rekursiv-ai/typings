@@ -3,6 +3,13 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.10 - 2026-10-26
+
+### Changed
+
+- The bashlex stubs type the parser, its AST nodes and their fields.
+- The YAML stubs type composition and node values.
+
 ## 0.1.9 - 2026-10-23
 
 ### Changed
