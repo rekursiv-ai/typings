@@ -1,4 +1,5 @@
 from collections.abc import Generator, Iterator
+from io import BytesIO
 from pathlib import Path
 from typing import Any, Self
 
@@ -32,7 +33,7 @@ class PdfDocument(pdfium_i.AutoCloseable):
     def is_tagged(self) -> Any: ...
     def save(
         self,
-        dest: str | Path,
+        dest: str | Path | BytesIO,
         version: int | None = ...,
         flags: int = ...,
     ) -> None: ...
