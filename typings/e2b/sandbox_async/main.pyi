@@ -17,6 +17,12 @@ class AsyncSandbox:
     def files(self) -> Filesystem: ...
     @property
     def commands(self) -> Commands: ...
+    def download_url(
+        self,
+        path: str,
+        user: str | None = ...,
+        use_signature_expiration: int | None = ...,
+    ) -> str: ...
     @classmethod
     def create(
         cls,
