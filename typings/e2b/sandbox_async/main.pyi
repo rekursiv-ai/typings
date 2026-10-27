@@ -23,6 +23,12 @@ class AsyncSandbox:
         user: str | None = ...,
         use_signature_expiration: int | None = ...,
     ) -> str: ...
+    def upload_url(
+        self,
+        path: str,
+        user: str | None = ...,
+        use_signature_expiration: int | None = ...,
+    ) -> str: ...
     @classmethod
     def create(
         cls,
