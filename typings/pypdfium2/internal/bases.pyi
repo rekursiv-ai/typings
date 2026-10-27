@@ -30,6 +30,7 @@ class _FinalizerOwner:
 class AutoCastable: ...
 
 class AutoCloseable(AutoCastable):
+    raw: object | None
     def __init__(
         self,
         close_func,
