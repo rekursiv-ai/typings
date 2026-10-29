@@ -3,6 +3,16 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.11 - 2026-10-28
+
+### Changed
+
+- The pypdfium2 stubs type saving to `BytesIO`, page sizes, and `raw` on
+  `AutoCloseable`.
+- The YAML constructor stubs annotate node parameters.
+- The e2b, h5py, jax, optax, pyarrow, pylatexenc, sklearn, torch, and tqdm
+  stubs cover more of their APIs.
+
 ## 0.1.10 - 2026-10-26
 
 ### Changed
