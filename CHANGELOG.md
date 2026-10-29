@@ -3,6 +3,12 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Unreleased
+
+### Added
+
+- Stubs for `asyncio_atexit` (`register`, `unregister`).
+
 ## 0.1.11 - 2026-10-28
 
 ### Changed
