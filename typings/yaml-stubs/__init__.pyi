@@ -31,8 +31,14 @@ __with_libyaml__: Final[bool]
 __version__: Final[str]
 
 def warnings(settings=None): ...
-def scan(stream, Loader: type[_Loader | _CLoader] = ...): ...
-def parse(stream, Loader: type[_Loader | _CLoader] = ...): ...
+def scan(
+    stream: _ReadStream,
+    Loader: type[_Loader | _CLoader] = ...,
+) -> Iterator[Token]: ...
+def parse(
+    stream: _ReadStream,
+    Loader: type[_Loader | _CLoader] = ...,
+) -> Iterator[Event]: ...
 def compose(
     stream: _ReadStream,
     Loader: type[_Loader | _CLoader] = ...,
