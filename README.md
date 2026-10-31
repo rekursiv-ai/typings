@@ -13,19 +13,10 @@ strict mode.
 ## Quick Start
 
 ```bash
-# Mac:
-#   # Required for quick install.
-#   brew install uv
-
-# Ubuntu/Debian:
-#   # Required for quick install.
-#   sudo apt-get install -y curl
-#   curl -LsSf https://astral.sh/uv/install.sh | sh
-
 uv add --dev rekursiv-ai-typings
-
-# Alternatively: python -m pip install rekursiv-ai-typings
 ```
+
+See [Install](#install) for additional details.
 
 There is nothing to configure. Each library's stubs install as a separate
 `<pkg>-stubs` package (the standard PEP 561 layout), and both checkers look for
@@ -85,3 +76,25 @@ extraPaths = [".venv/share/rekursiv-ai-typings"]
 
 The placeholders only make the import resolve. The types still come from our
 stubs.
+
+## Install
+
+```bash
+uv add --dev rekursiv-ai-typings
+```
+
+If you're missing `uv`,
+- Mac
+  ```bash
+  brew install uv
+  ```
+- Linux
+  ```bash
+  sudo apt install -y curl
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
+
+Or with pip,
+```bash
+python -m pip install rekursiv-ai-typings
+```
