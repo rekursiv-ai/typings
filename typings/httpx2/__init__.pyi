@@ -90,7 +90,8 @@ class Auth:
     requires_response_body: bool
     def auth_flow(self, request: Request) -> Generator[Request, Response]: ...
     def async_auth_flow(
-        self, request: Request
+        self,
+        request: Request,
     ) -> AsyncGenerator[Request, Response]: ...
 
 class AsyncByteStream:
