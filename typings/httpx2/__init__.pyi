@@ -3,6 +3,7 @@ from collections.abc import (
     AsyncIterable,
     AsyncIterator,
     Callable,
+    Generator,
     Iterable,
     Iterator,
     Mapping,
@@ -84,7 +85,13 @@ class Cookies(Mapping[str, str]):
     def __iter__(self) -> Iterator[str]: ...
     def __len__(self) -> int: ...
 
-class Auth: ...
+class Auth:
+    requires_request_body: bool
+    requires_response_body: bool
+    def auth_flow(self, request: Request) -> Generator[Request, Response]: ...
+    def async_auth_flow(
+        self, request: Request
+    ) -> AsyncGenerator[Request, Response]: ...
 
 class AsyncByteStream:
     def __aiter__(self) -> AsyncIterator[bytes]: ...

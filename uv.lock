@@ -538,7 +538,7 @@ wheels = [
 
 [[package]]
 name = "rekursiv-ai-typings"
-version = "0.1.11"
+version = "0.1.12"
 source = { editable = "." }
 
 [package.dev-dependencies]

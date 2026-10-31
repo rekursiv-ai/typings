@@ -3,7 +3,7 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## Unreleased
+## 0.1.12 - 2026-10-30
 
 ### Added
 
