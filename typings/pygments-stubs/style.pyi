@@ -3,7 +3,7 @@ from collections.abc import (
     Mapping,
     Set as AbstractSet,
 )
-from typing import TypedDict, type_check_only
+from typing import ClassVar, TypedDict, type_check_only
 
 from pygments.token import _TokenType
 
@@ -34,15 +34,14 @@ class StyleMeta(type):
     def __iter__(cls) -> Iterator[tuple[_TokenType, _StyleDict]]: ...
     def __len__(cls) -> int: ...
 
-    background_color: str
-    highlight_color: str
-    line_number_color: str
-    line_number_background_color: str
-    line_number_special_color: str
-    line_number_special_background_color: str
-    styles: Mapping[_TokenType, str]
-    name: str
-    aliases: list[str]
-    web_style_gallery_exclude: bool
-
-class Style(metaclass=StyleMeta): ...
+class Style(metaclass=StyleMeta):
+    background_color: ClassVar[str]
+    highlight_color: ClassVar[str]
+    line_number_color: ClassVar[str]
+    line_number_background_color: ClassVar[str]
+    line_number_special_color: ClassVar[str]
+    line_number_special_background_color: ClassVar[str]
+    styles: ClassVar[Mapping[_TokenType, str]]
+    name: ClassVar[str]
+    aliases: ClassVar[list[str]]
+    web_style_gallery_exclude: ClassVar[bool]
