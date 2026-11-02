@@ -15,13 +15,21 @@ from ...generation import GenerationMixin
 from ...integrations import use_kernel_forward_from_hub
 from ...modeling_flash_attention_utils import FlashAttentionKwargs
 from ...modeling_layers import GradientCheckpointingLayer
-from ...modeling_outputs import BaseModelOutputWithPast, ModelOutput
+from ...modeling_outputs import (
+    BaseModelOutputWithPast,
+    BaseModelOutputWithPooling,
+    ModelOutput,
+)
 from ...modeling_rope_utils import dynamic_rope_update
 from ...modeling_utils import PreTrainedModel
 from ...processing_utils import Unpack
 from ...utils import TransformersKwargs, auto_docstring
 from ...utils.deprecation import deprecate_kwarg
 from ...utils.generic import check_model_inputs
+
+@dataclass
+class BaseModelOutputWithDeepstackFeatures(BaseModelOutputWithPooling):
+    deepstack_features: list[torch.FloatTensor] | None = ...
 
 class Qwen3VLVisionMLP(nn.Module):
     def __init__(self, config) -> None: ...
@@ -187,8 +195,12 @@ class Qwen3VLVisionModel(Qwen3VLPreTrainedModel):
         hidden_states: torch.Tensor,
         grid_thw: torch.Tensor,
         **kwargs,
-    ) -> torch.Tensor: ...
-    def __call__(self, *args: Any, **kwargs: Any) -> torch.Tensor: ...
+    ) -> BaseModelOutputWithDeepstackFeatures: ...
+    def __call__(
+        self,
+        *args: Any,
+        **kwargs: Any,
+    ) -> BaseModelOutputWithDeepstackFeatures: ...
 
 @auto_docstring(custom_intro=...)
 class Qwen3VLTextModel(Qwen3VLPreTrainedModel):

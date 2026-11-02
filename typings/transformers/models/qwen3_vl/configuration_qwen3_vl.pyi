@@ -1,6 +1,7 @@
 from ...configuration_utils import PretrainedConfig
 
 class Qwen3VLVisionConfig(PretrainedConfig):
+    initializer_range: float
     def __init__(
         self,
         depth=...,
