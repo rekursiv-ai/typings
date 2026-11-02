@@ -2,3 +2,4 @@
 # declares none of them statically.
 CACHE_DIR: str
 NUMBA_NUM_THREADS: int
+THREADING_LAYER: str
