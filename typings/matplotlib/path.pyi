@@ -1,7 +1,7 @@
 from collections.abc import Generator, Iterable, Sequence
 from typing import Any, overload
 
-from numpy.typing import ArrayLike
+from numpy.typing import ArrayLike, NDArray
 
 import numpy as np
 
@@ -26,7 +26,7 @@ class Path:
         readonly: bool = ...,
     ) -> None: ...
     @property
-    def vertices(self) -> ArrayLike: ...
+    def vertices(self) -> NDArray[np.float64]: ...
     @vertices.setter
     def vertices(self, vertices: ArrayLike) -> None: ...
     @property
