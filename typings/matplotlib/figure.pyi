@@ -7,10 +7,12 @@ from matplotlib.axes import Axes
 from matplotlib.cm import ScalarMappable
 from matplotlib.colorbar import Colorbar
 from matplotlib.legend import Legend
+from matplotlib.text import Text
 from matplotlib.typing import ColorType
 
 class Figure:
     axes: list[Axes]
+    texts: list[Text]
     def __init__(
         self,
         figsize: tuple[float, float] | None = ...,
@@ -78,3 +80,4 @@ class Figure:
     ) -> None: ...
     def get_figwidth(self) -> float: ...
     def get_figheight(self) -> float: ...
+    def draw_without_rendering(self) -> None: ...
