@@ -37,6 +37,7 @@ __all__ = [
     "all_gather_coalesced",
     "all_gather_into_tensor",
     "all_gather_object",
+    "all_gather_single",
     "all_reduce",
     "all_reduce_coalesced",
     "all_to_all",
@@ -383,6 +384,15 @@ def all_gather(
     group: ProcessGroup | None = ...,
     async_op: bool = ...,
 ) -> Work | None: ...
+def all_gather_single(
+    output_tensor: Tensor,
+    input_tensor: Tensor,
+    group: ProcessGroup | None = ...,
+    async_op: bool = ...,
+) -> Work | None: ...
+@deprecated(
+    "`torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.",
+)
 def all_gather_into_tensor(
     output_tensor: Tensor,
     input_tensor: Tensor,
