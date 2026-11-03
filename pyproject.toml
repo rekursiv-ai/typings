@@ -25,7 +25,57 @@ dependencies = [
     # Prefer https://awesome-python.com deps over alternatives.
 ]
 
+[project.optional-dependencies]
+cpu = [
+    "torch",
+    "torchao",
+    "torchaudio",
+    "torchvision",
+]
+cu126 = [
+    "jax[cuda12] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torch",
+    "torchao",
+    "torchaudio",
+    "torchvision",
+]
+cu128 = [
+    "jax[cuda12] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torch",
+    "torchao",
+    "torchaudio",
+    "torchvision",
+]
+cu130 = [
+    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torch",
+    "torchao",
+    "torchaudio",
+    "torchvision",
+]
+cu132 = [
+    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torch",
+    "torchao",
+    "torchaudio",
+    "torchvision",
+]
+cu134 = [
+    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torch",
+    "torchao",
+    "torchaudio",
+    "torchvision",
+]
+
 [dependency-groups]
+cuda = [
+    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torch",
+    "torchao",
+    "torchaudio",
+    "torchvision",
+]
 # NEVER ADD MORE DEPENDENCIES!
 
 debug = [
@@ -666,6 +716,22 @@ formats = "ipynb,py:percent"
 
 [tool.uv]
 package = true
+default-groups = ["dev", "cuda"]
+conflicts = [[
+    {extra = "cpu"},
+    {extra = "cu126"},
+    {extra = "cu128"},
+    {extra = "cu130"},
+    {extra = "cu132"},
+    {extra = "cu134"},
+], [
+    {group = "cuda"},
+    {extra = "cpu"},
+    {extra = "cu126"},
+    {extra = "cu128"},
+    {extra = "cu130"},
+    {extra = "cu134"},
+]]
 environments = [
     "sys_platform == 'linux'",
     "sys_platform == 'darwin'",
