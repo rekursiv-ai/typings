@@ -29,42 +29,31 @@ dependencies = [
 cpu = [
     "torch",
     "torchao",
-    "torchaudio",
     "torchvision",
 ]
 cu126 = [
-    "jax[cuda12] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
     "torch",
     "torchao",
-    "torchaudio",
     "torchvision",
 ]
 cu128 = [
-    "jax[cuda12] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
     "torch",
     "torchao",
-    "torchaudio",
     "torchvision",
 ]
 cu130 = [
-    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
     "torch",
     "torchao",
-    "torchaudio",
     "torchvision",
 ]
 cu132 = [
-    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
     "torch",
     "torchao",
-    "torchaudio",
     "torchvision",
 ]
 cu134 = [
-    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
     "torch",
     "torchao",
-    "torchaudio",
     "torchvision",
 ]
 
@@ -72,10 +61,8 @@ cu134 = [
 # NEVER ADD MORE DEPENDENCIES!
 
 cuda = [
-    "jax[cuda13] ; sys_platform == 'linux' and platform_machine == 'x86_64'",
     "torch",
     "torchao",
-    "torchaudio",
     "torchvision",
 ]
 
@@ -111,7 +98,7 @@ dev = [
     {include-group = "debug"},
 ]
 
-# NEVER ADD MORE DEPENDENCY GROUPS!
+# NEVER ADD OTHER DEPENDENCY GROUPS: A NEW GROUP SERVES A PROJECT, AS ABOVE.
 
 [project.urls]
 Homepage = "https://www.rekursiv.ai"
