@@ -25,6 +25,49 @@ dependencies = [
     # Prefer https://awesome-python.com deps over alternatives.
 ]
 
+[dependency-groups]
+
+# Requirements are floors; uv.lock fixes versions. Never cap a dependency.
+# Public package deltas replace project.dependencies; these groups are monorepo-only.
+
+cuda = [
+    "torch",
+    "torchao",
+    "torchvision",
+]
+
+lint = [
+    "codespell>=2.4.3",
+    "ruff>=0.17.3",
+]
+test = [
+    "pytest-timeout>=2.4.0",
+    "pytest-xdist>=3.8.0",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
+    "nodejs-wheel-binaries>=24.19.0",
+]
+typecheck = [
+    "basedpyright>=1.40.2",
+    "pyrefly>=1.4.0",
+    "ty>=0.0.95",
+    "hatchling>=1.33.0",  # hatch_build.py subscripts its one-parameter BuildHookInterface.
+]
+"pre-commit" = [
+    "pre-commit>=4.7.0",
+    {include-group = "lint"},
+    {include-group = "test"},
+    {include-group = "typecheck"},
+]
+dev = [
+    {include-group = "pre-commit"},
+    {include-group = "debug"},
+]
+debug = [
+    "ipython>=9.18.0",
+    "tqdm>=4.70.1",
+]
+
 [project.optional-dependencies]
 cpu = [
     "torch",
@@ -56,49 +99,6 @@ cu134 = [
     "torchao",
     "torchvision",
 ]
-
-[dependency-groups]
-# NEVER ADD MORE DEPENDENCIES!
-
-cuda = [
-    "torch",
-    "torchao",
-    "torchvision",
-]
-
-debug = [
-    "ipython>=9.18.0",
-    "tqdm>=4.70.1",
-]
-lint = [
-    "codespell>=2.4.3",
-    "ruff>=0.17.3",
-]
-test = [
-    "pytest-timeout>=2.4.0",
-    "pytest-xdist>=3.8.0",
-    "pytest>=9.2.0",
-    "pytest-cov>=7.1.0",
-    "nodejs-wheel-binaries>=24.19.0",
-]
-typecheck = [
-    "basedpyright>=1.40.2",
-    "pyrefly>=1.4.0",
-    "ty>=0.0.95",
-    "hatchling>=1.33.0",  # hatch_build.py subscripts its one-parameter BuildHookInterface.
-]
-"pre-commit" = [
-    "pre-commit>=4.7.0",
-    {include-group = "lint"},
-    {include-group = "test"},
-    {include-group = "typecheck"},
-]
-dev = [
-    {include-group = "pre-commit"},
-    {include-group = "debug"},
-]
-
-# NEVER ADD OTHER DEPENDENCY GROUPS: A NEW GROUP SERVES A PROJECT, AS ABOVE.
 
 [project.urls]
 Homepage = "https://www.rekursiv.ai"
