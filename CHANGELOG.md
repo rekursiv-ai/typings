@@ -3,6 +3,20 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.13 - 2026-11-05
+
+### Added
+
+- Stubs for `_pytest.monkeypatch` (`MonkeyPatch`).
+- `torch.distributed` and `triton.runtime.interpreter` members, and the
+  `torch._library.opaque_object` stub.
+
+### Changed
+
+- Updated stubs for `httpx2`, `matplotlib` (`collections`, `figure`, `path`,
+  `pyplot`), `numba.core.config`, `pygments` styles, `torch.utils._pytree`,
+  Qwen3-VL in `transformers`, and `yaml`.
+
 ## 0.1.12 - 2026-10-30
 
 ### Added
