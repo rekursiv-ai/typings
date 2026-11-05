@@ -3,12 +3,6 @@ from collections.abc import (
     Callable as _Callable,
     Sequence,
 )
-from math import (
-    e as e,
-    inf as inf,
-    nan as nan,
-    pi as pi,
-)
 from types import NotImplementedType
 from typing import (
     TYPE_CHECKING as TYPE_CHECKING,
@@ -563,6 +557,11 @@ def _check(
     cond: builtins.bool,
     message: str | Callable[[], str] | None = ...,
 ) -> None: ...
+
+e: builtins.float
+inf: builtins.float
+nan: builtins.float
+pi: builtins.float
 
 # Re-export class names that live in ``torch._C`` but were dropped from
 # ``torch.__all__``. Stub-internal references like ``torch.memory_format``
