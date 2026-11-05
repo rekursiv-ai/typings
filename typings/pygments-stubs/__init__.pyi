@@ -1,4 +1,4 @@
-from collections.abc import Iterator
+from collections.abc import Iterable, Iterator
 from typing import TypeVar, overload
 
 from _typeshed import SupportsWrite
@@ -15,9 +15,17 @@ __all__ = ["format", "highlight", "lex"]
 
 def lex(code: str, lexer: Lexer) -> Iterator[tuple[_TokenType, str]]: ...
 @overload
-def format(tokens, formatter: Formatter[_T], outfile: SupportsWrite[_T]) -> None: ...
+def format(
+    tokens: Iterable[tuple[_TokenType, str]],
+    formatter: Formatter[_T],
+    outfile: SupportsWrite[_T],
+) -> None: ...
 @overload
-def format(tokens, formatter: Formatter[_T], outfile: None = ...) -> _T: ...
+def format(
+    tokens: Iterable[tuple[_TokenType, str]],
+    formatter: Formatter[_T],
+    outfile: None = ...,
+) -> _T: ...
 @overload
 def highlight(
     code: str,
