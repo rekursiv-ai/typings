@@ -5,6 +5,7 @@ from torch import Tensor
 
 import torch
 
+from .container import ModuleList
 from .module import Module
 
 __all__ = [
@@ -57,6 +58,7 @@ class Transformer(Module):
     ) -> Tensor: ...
 
 class TransformerEncoder(Module):
+    layers: ModuleList[TransformerEncoderLayer]
     __constants__ = ...
     def __init__(
         self,
@@ -76,6 +78,7 @@ class TransformerEncoder(Module):
     def __call__(self, *args: Any, **kwargs: Any) -> Tensor: ...
 
 class TransformerDecoder(Module):
+    layers: ModuleList[TransformerDecoderLayer]
     __constants__ = ...
     def __init__(
         self,

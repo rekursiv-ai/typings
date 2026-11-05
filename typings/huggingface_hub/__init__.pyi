@@ -27,7 +27,7 @@ def hf_hub_download(
     local_files_only: bool = ...,
     headers: dict[str, str] | None = ...,
     endpoint: str | None = ...,
-    tqdm_class: type[tqdm] | None = ...,
+    tqdm_class: type[tqdm[object]] | None = ...,
 ) -> str: ...
 def list_repo_files(
     repo_id: str,

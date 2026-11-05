@@ -1,6 +1,6 @@
 from collections.abc import Callable, Sequence
 from importlib.metadata import EntryPoint
-from typing import Any, Protocol
+from typing import Protocol, overload
 
 from torch import fx
 
@@ -74,14 +74,48 @@ type CompilerFn = Callable[[fx.GraphModule, list[torch.Tensor]], CompiledFn]
 _BACKENDS: dict[str, EntryPoint | None] = ...
 _COMPILER_FNS: dict[str, CompilerFn] = ...
 
-def register_backend(
-    compiler_fn: CompilerFn | None = ...,
+class _BackendDecorator(Protocol):
+    def __call__[F: CompilerFn](self, compiler_fn: F, /) -> F: ...
+
+@overload
+def register_backend[F: CompilerFn](
+    compiler_fn: F,
     name: str | None = ...,
     tags: Sequence[str] = ...,
-) -> Callable[..., Any]: ...
-
-register_debug_backend = ...
-register_experimental_backend = ...
-
+) -> F: ...
+@overload
+def register_backend(
+    compiler_fn: None = ...,
+    name: str | None = ...,
+    tags: Sequence[str] = ...,
+) -> _BackendDecorator: ...
+@overload
+def register_debug_backend[F: CompilerFn](
+    compiler_fn: F,
+    name: str | None = ...,
+    *,
+    tags: Sequence[str] = ...,
+) -> F: ...
+@overload
+def register_debug_backend(
+    compiler_fn: None = ...,
+    name: str | None = ...,
+    *,
+    tags: Sequence[str] = ...,
+) -> _BackendDecorator: ...
+@overload
+def register_experimental_backend[F: CompilerFn](
+    compiler_fn: F,
+    name: str | None = ...,
+    *,
+    tags: Sequence[str] = ...,
+) -> F: ...
+@overload
+def register_experimental_backend(
+    compiler_fn: None = ...,
+    name: str | None = ...,
+    *,
+    tags: Sequence[str] = ...,
+) -> _BackendDecorator: ...
 def lookup_backend(compiler_fn: str | CompilerFn) -> CompilerFn: ...
 def list_backends(exclude_tags=...) -> list[str]: ...

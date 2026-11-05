@@ -54,17 +54,21 @@ class _HasCtxForward[**CP, CR](Protocol):
     @classmethod
     def forward(cls, ctx: Any, /, *args: CP.args, **kwargs: CP.kwargs) -> CR: ...
 
+class _ForwardDescriptor(Protocol):
+    def __get__(
+        self,
+        instance: object,
+        owner: type[object],
+        /,
+    ) -> Callable[..., object]: ...
+
 class _SingleLevelFunction(
     _C._FunctionBase,
     FunctionCtx,
     _HookMixin,
     metaclass=FunctionMeta,
 ):
-    # Read-only, so subclasses may define ``forward`` as a static or a class
-    # method of any signature: ty checks a writable attribute's overrides
-    # invariantly.
-    @property
-    def forward(self) -> Callable[..., Any]: ...
+    forward: _ForwardDescriptor
 
     # Autograd invokes these positionally, so the parameter NAMES must not
     # bind: an override is free to call the context `context` rather than
