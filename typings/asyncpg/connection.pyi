@@ -482,7 +482,7 @@ class _ConnectionProxy(Generic[_Record]):
 
 class LoggedQuery(NamedTuple):
     query: str
-    args: Any
+    args: Iterable[object]
     timeout: float | None
     elapsed: float
     exception: BaseException | None
