@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Final, Protocol, cast
 
+import shutil
+
 import pytest
 
 from hatch_build import StubsBuildHook, layout
@@ -61,10 +63,15 @@ def test_a_tree_already_named_as_stubs_ships_under_its_own_name(tmp_path: Path) 
     assert force_include == {str(stub): "tqdm-stubs/__init__.pyi"}
 
 
-def test_the_shipped_wheel_holds_yaml_stubs() -> None:
+def test_the_shipped_wheel_holds_yaml_stubs(tmp_path: Path) -> None:
     """The export workflow greps the wheel for this path."""
-    force_include, _ = layout(_CWD / "typings")
+    source = _CWD / "typings" / "yaml-stubs"
+    shutil.copytree(source, tmp_path / source.name)
+    force_include, _ = layout(tmp_path)
     assert "yaml-stubs/__init__.pyi" in force_include.values()
+    assert (tmp_path / "yaml-stubs" / "__init__.pyi").read_bytes() == (
+        source / "__init__.pyi"
+    ).read_bytes()
 
 
 def test_a_partial_tree_keeps_its_marker(stubs: Path) -> None:
@@ -81,11 +88,15 @@ def test_only_placeholder_trees_ship_as_shared_data(stubs: Path) -> None:
     }
 
 
-def test_an_optional_import_ships_a_placeholder() -> None:
+def test_an_optional_import_ships_a_placeholder(tmp_path: Path) -> None:
     # Trackinizer imports aiortc under TYPE_CHECKING without depending on it.
-    stubs = _CWD / "typings"
-    _, shared_data = layout(stubs)
-    assert shared_data[str(stubs / "aiortc")] == "share/rekursiv-ai-typings/aiortc"
+    source = _CWD / "typings" / "aiortc"
+    shutil.copytree(source, tmp_path / source.name)
+    _, shared_data = layout(tmp_path)
+    assert shared_data[str(tmp_path / "aiortc")] == "share/rekursiv-ai-typings/aiortc"
+    assert (tmp_path / "aiortc" / "__init__.py").read_bytes() == (
+        source / "__init__.py"
+    ).read_bytes()
 
 
 def test_initialize_adds_the_layout_to_existing_build_data(stubs: Path) -> None:

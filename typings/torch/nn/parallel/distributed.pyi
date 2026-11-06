@@ -2,12 +2,16 @@ from collections.abc import Callable, Generator
 from contextlib import contextmanager
 from dataclasses import dataclass
 from enum import Enum
+from types import MappingProxyType
 from typing import Any, Self
 
 from torch import Tensor
+from torch._C._distributed_c10d import ProcessGroup
 from torch.autograd import Function
-from torch.distributed.algorithms.join import Joinable, JoinHook
+from torch.distributed.algorithms.join import Join, Joinable, JoinHook
+from torch.distributed.rpc.api import RRef
 from torch.nn.modules import Module
+from torch.utils._pytree import PyTree
 
 import torch
 import torch.distributed as dist
