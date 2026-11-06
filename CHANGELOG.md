@@ -3,6 +3,12 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.15 - 2026-11-06
+
+### Added
+
+- `httpx2.QueryParams.multi_items` stub.
+
 ## 0.1.14 - 2026-11-06
 
 ### Changed
