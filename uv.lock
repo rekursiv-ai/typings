@@ -1030,7 +1030,7 @@ wheels = [
 
 [[package]]
 name = "rekursiv-ai-typings"
-version = "0.1.13"
+version = "0.1.14"
 source = { editable = "." }
 default-groups = ["cuda", "dev"]
 

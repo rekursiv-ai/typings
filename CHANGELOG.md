@@ -3,6 +3,15 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.14 - 2026-11-06
+
+### Changed
+
+- Updated stubs for `asyncpg.connection`, `huggingface_hub`, `pygments`
+  styles, `tiktoken_ext.openai_public`, and `torch` (`_dynamo` backends,
+  `autograd.function`, `nn.modules.transformer`,
+  `nn.parallel.distributed`).
+
 ## 0.1.13 - 2026-11-05
 
 ### Added
