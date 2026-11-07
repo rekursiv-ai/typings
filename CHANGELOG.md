@@ -3,6 +3,12 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.16 - 2026-11-07
+
+### Changed
+
+- Updated third-party stubs and development tooling.
+
 ## 0.1.15 - 2026-11-06
 
 ### Added
