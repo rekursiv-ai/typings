@@ -51,8 +51,14 @@ def stubs(tmp_path: Path) -> Path:
 
 def test_each_tree_ships_as_its_stubs_package(stubs: Path) -> None:
     force_include, _ = layout(stubs)
-    assert force_include[str(stubs / "yaml" / "nodes.pyi")] == "yaml-stubs/nodes.pyi"
-    assert str(stubs / "yaml" / "notes.txt") not in force_include
+    assert force_include == {
+        str(stubs / "yaml/__init__.pyi"): "yaml-stubs/__init__.pyi",
+        str(stubs / "yaml/nodes.pyi"): "yaml-stubs/nodes.pyi",
+        str(stubs / "fastapi/testclient.pyi"): "fastapi-stubs/testclient.pyi",
+        str(stubs / "fastapi/py.typed"): "fastapi-stubs/py.typed",
+        str(stubs / "triton/__init__.pyi"): "triton-stubs/__init__.pyi",
+        str(stubs / "triton/__init__.py"): "triton-stubs/__init__.py",
+    }
 
 
 def test_a_tree_already_named_as_stubs_ships_under_its_own_name(tmp_path: Path) -> None:
