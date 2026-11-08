@@ -29,4 +29,13 @@ class SandboxInfo:
 
 class SandboxQuery:
     metadata: dict[str, str] | None
-    def __init__(self, metadata: dict[str, str] | None = ...) -> None: ...
+    state: list[SandboxState] | None
+    started_after: datetime | None
+    template: str | None
+    def __init__(
+        self,
+        metadata: dict[str, str] | None = ...,
+        state: list[SandboxState] | None = ...,
+        started_after: datetime | None = ...,
+        template: str | None = ...,
+    ) -> None: ...
