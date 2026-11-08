@@ -3,6 +3,14 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.17 - 2026-11-07
+
+### Changed
+
+- Configure user-directory lint rules for the exported package.
+- Pin the hatch build stub layout in its test.
+- Update shared development tooling.
+
 ## 0.1.16 - 2026-11-07
 
 ### Changed
