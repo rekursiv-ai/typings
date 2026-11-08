@@ -3,6 +3,13 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.18 - 2026-11-08
+
+### Changed
+
+- Update third-party stubs and shared development tooling.
+- Configure lint through the Codedoctor command and settings table.
+
 ## 0.1.17 - 2026-11-07
 
 ### Changed
