@@ -1233,7 +1233,9 @@ class TensorBase(metaclass=_TensorMeta):
     shape: Size
     data: Tensor
     names: list[str]
-    device: _device
+    # Read-only: torch defines it as a getter, and a subclass may override it.
+    @property
+    def device(self) -> _device: ...
     dtype: _dtype
     layout: _layout
     real: Tensor

@@ -79,6 +79,7 @@ T = TypeVar("T")
 S = TypeVar("S")
 U = TypeVar("U")
 R = TypeVar("R")
+_Tree = TypeVar("_Tree")
 DEFAULT_TREESPEC_SERIALIZATION_PROTOCOL = ...
 NO_SERIALIZED_TYPE_NAME_FOUND = ...
 
@@ -244,7 +245,7 @@ def tree_iter(
 def tree_leaves(
     tree: PyTree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
-) -> list[Any]: ...
+) -> list[object]: ...
 def tree_structure(
     tree: PyTree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
@@ -296,48 +297,48 @@ def tree_map_only(
     type_or_types_or_pred: type[T],
     /,
     func: Fn[T, Any],
-    tree: PyTree,
+    tree: _Tree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
-) -> PyTree: ...
+) -> _Tree: ...
 @overload
 def tree_map_only(
     type_or_types_or_pred: Type2[T, S],
     /,
     func: Fn2[T, S, Any],
-    tree: PyTree,
+    tree: _Tree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
-) -> PyTree: ...
+) -> _Tree: ...
 @overload
 def tree_map_only(
     type_or_types_or_pred: Type3[T, S, U],
     /,
     func: Fn3[T, S, U, Any],
-    tree: PyTree,
+    tree: _Tree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
-) -> PyTree: ...
+) -> _Tree: ...
 @overload
 def tree_map_only(
     type_or_types_or_pred: TypeAny,
     /,
     func: FnAny[Any],
-    tree: PyTree,
+    tree: _Tree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
-) -> PyTree: ...
+) -> _Tree: ...
 @overload
 def tree_map_only(
     type_or_types_or_pred: Callable[[Any], bool],
     /,
     func: FnAny[Any],
-    tree: PyTree,
+    tree: _Tree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
-) -> PyTree: ...
+) -> _Tree: ...
 def tree_map_only(
     type_or_types_or_pred: TypeAny | Callable[[Any], bool],
     /,
     func: FnAny[Any],
-    tree: PyTree,
+    tree: _Tree,
     is_leaf: Callable[[PyTree], bool] | None = ...,
-) -> PyTree: ...
+) -> _Tree: ...
 @overload
 def tree_map_only_(
     type_or_types_or_pred: type[T],
