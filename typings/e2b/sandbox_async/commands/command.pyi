@@ -2,9 +2,14 @@ from collections.abc import Awaitable, Callable, Coroutine
 from typing import Literal, overload
 
 from e2b.sandbox.commands.command_handle import CommandResult
+from e2b.sandbox.commands.main import ProcessInfo
 from e2b.sandbox_async.commands.command_handle import AsyncCommandHandle
 
 class Commands:
+    async def list(
+        self,
+        request_timeout: float | None = ...,
+    ) -> list[ProcessInfo]: ...
     @overload
     def run(
         self,

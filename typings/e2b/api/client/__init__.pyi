@@ -1,1 +1,2 @@
-# Package of the generated API client; only its models are stubbed.
+# Package of the generated API client: its models, and the one sandbox read KnowHost
+# makes below the SDK.
