@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import TypedDict
+from typing import Literal, NotRequired, TypedDict
 
 from e2b.api.client.models import SandboxState
 
@@ -26,6 +26,8 @@ class SandboxInfo:
     started_at: datetime
     end_at: datetime
     state: SandboxState
+    cpu_count: int
+    memory_mb: int
 
 class SandboxQuery:
     metadata: dict[str, str] | None
@@ -39,3 +41,7 @@ class SandboxQuery:
         started_after: datetime | None = ...,
         template: str | None = ...,
     ) -> None: ...
+
+class SandboxLifecycle(TypedDict):
+    on_timeout: Literal["pause", "kill"]
+    auto_resume: NotRequired[bool]

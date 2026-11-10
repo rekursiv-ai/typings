@@ -2,6 +2,7 @@ from collections.abc import Coroutine
 
 from e2b.sandbox.sandbox_api import (
     SandboxInfo,
+    SandboxLifecycle,
     SandboxNetworkOpts,
     SandboxNetworkUpdate,
     SandboxQuery,
@@ -40,7 +41,10 @@ class AsyncSandbox:
         allow_internet_access: bool = ...,
         *,
         network: SandboxNetworkOpts | None = ...,
+        lifecycle: SandboxLifecycle | None = ...,
+        idempotency_key: str | None = ...,
         api_key: str | None = ...,
+        request_timeout: float | None = ...,
     ) -> Coroutine[object, object, AsyncSandbox]: ...
     @staticmethod
     def connect(
@@ -48,9 +52,30 @@ class AsyncSandbox:
         timeout: int | None = ...,
         *,
         api_key: str | None = ...,
+        request_timeout: float | None = ...,
     ) -> Coroutine[object, object, AsyncSandbox]: ...
     @staticmethod
-    async def kill(sandbox_id: str, *, api_key: str | None = ...) -> bool: ...
+    async def kill(
+        sandbox_id: str,
+        *,
+        api_key: str | None = ...,
+        request_timeout: float | None = ...,
+    ) -> bool: ...
+    @staticmethod
+    async def pause(
+        sandbox_id: str,
+        *,
+        api_key: str | None = ...,
+        request_timeout: float | None = ...,
+    ) -> bool: ...
+    @staticmethod
+    def set_timeout(
+        sandbox_id: str,
+        timeout: int,
+        *,
+        api_key: str | None = ...,
+        request_timeout: float | None = ...,
+    ) -> Coroutine[object, object, None]: ...
     @staticmethod
     async def get_info(
         sandbox_id: str,
