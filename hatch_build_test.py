@@ -12,7 +12,7 @@ import pytest
 from hatch_build import StubsBuildHook, layout
 
 
-_CWD: Final = Path(__file__).resolve().parent
+_CWD: Final[Path] = Path(__file__).resolve().parent
 
 
 class _Hook(Protocol):
