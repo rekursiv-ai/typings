@@ -4,6 +4,7 @@ from typing import Any
 import ctypes
 
 from pypdfium2._helpers.bitmap import PdfBitmap
+from pypdfium2._helpers.textpage import PdfTextPage
 
 import pypdfium2.internal as pdfium_i
 
