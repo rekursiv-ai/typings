@@ -84,8 +84,8 @@ wheels = [
 
 [[package]]
 name = "codedoctor"
-version = "0.1.5"
-source = { git = "https://github.com/rekursiv-ai/codedoctor?branch=main#de6e60cdf2baa6ea2b1553fe1316babf90a93c83" }
+version = "0.1.6"
+source = { git = "https://github.com/rekursiv-ai/codedoctor?branch=main#693320c26a239c9cceb0f1e26ff3fead9690bb9f" }
 dependencies = [
     { name = "pyyaml" },
     { name = "rignore" },
@@ -1328,7 +1328,7 @@ wheels = [
 
 [[package]]
 name = "rekursiv-ai-typings"
-version = "0.1.18"
+version = "0.1.19"
 source = { editable = "." }
 default-groups = ["cuda", "dev"]
 

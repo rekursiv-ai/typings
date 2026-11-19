@@ -3,6 +3,15 @@
 All notable typings changes are documented here. This project follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.1.19 - 2026-11-18
+
+### Changed
+
+- Extend e2b client, sandbox, and connection stubs.
+- Update compression.zstd, httpx2, py_pglite, pypdfium2, starlette,
+  torch.linalg, and triton stubs.
+- Update shared development tooling.
+
 ## 0.1.18 - 2026-11-08
 
 ### Changed
