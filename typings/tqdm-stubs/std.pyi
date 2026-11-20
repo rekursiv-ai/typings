@@ -126,7 +126,7 @@ class tqdm(Comparable, Generic[_T]):
     @classmethod
     def pandas(cls, **tqdm_kwargs): ...
     iterable: Incomplete
-    disable: Incomplete
+    disable: bool | None
     pos: Incomplete
     n: Incomplete
     total: Incomplete
@@ -169,7 +169,7 @@ class tqdm(Comparable, Generic[_T]):
         maxinterval: float = 10.0,
         miniters: Any = None,
         ascii: Any = None,
-        disable: bool = False,
+        disable: bool | None = False,
         unit: str = "it",
         unit_scale: bool = False,
         dynamic_ncols: bool = False,
@@ -200,7 +200,7 @@ class tqdm(Comparable, Generic[_T]):
         maxinterval: float = 10.0,
         miniters: Any = None,
         ascii: Any = None,
-        disable: bool = False,
+        disable: bool | None = False,
         unit: str = "it",
         unit_scale: bool = False,
         dynamic_ncols: bool = False,
