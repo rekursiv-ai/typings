@@ -1,6 +1,6 @@
 from collections.abc import Callable
 from types import FunctionType
-from typing import Generic, ParamSpec, Protocol, TypeVar
+from typing import ClassVar, Generic, ParamSpec, Protocol, TypeVar
 
 from numpy.typing import NDArray
 
@@ -13,7 +13,7 @@ _R = TypeVar("_R")
 
 class InterpretedFunction(Generic[_P, _R]):
     fn: FunctionType
-    rewritten_fn: dict[Callable[..., object], Callable[..., object]]
+    rewritten_fn: ClassVar[dict[Callable[..., object], Callable[..., object]]]
     def __init__(self, fn: Callable[_P, _R]) -> None: ...
     def __call__(self, *args: _P.args, **kwargs: _P.kwargs) -> _R: ...
     def __getitem__(
