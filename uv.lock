@@ -21,17 +21,15 @@ required-markers = [
 conflicts = [[
     { package = "rekursiv-ai-typings", extra = "cpu" },
     { package = "rekursiv-ai-typings", extra = "cu126" },
-    { package = "rekursiv-ai-typings", extra = "cu128" },
     { package = "rekursiv-ai-typings", extra = "cu130" },
     { package = "rekursiv-ai-typings", extra = "cu132" },
     { package = "rekursiv-ai-typings", extra = "cu134" },
 ], [
     { package = "rekursiv-ai-typings", extra = "cpu" },
     { package = "rekursiv-ai-typings", extra = "cu126" },
-    { package = "rekursiv-ai-typings", extra = "cu128" },
     { package = "rekursiv-ai-typings", extra = "cu130" },
     { package = "rekursiv-ai-typings", extra = "cu134" },
-    { package = "rekursiv-ai-typings", group = "cuda" },
+    { package = "rekursiv-ai-typings", group = "default-cuda" },
 ]]
 
 [[package]]
@@ -84,8 +82,8 @@ wheels = [
 
 [[package]]
 name = "codedoctor"
-version = "0.1.13"
-source = { git = "https://github.com/rekursiv-ai/codedoctor?branch=main#024b6b88d265ec1498f505e56c7b7119a283e543" }
+version = "0.1.15.dev1+g689b2e03a"
+source = { git = "https://github.com/rekursiv-ai/codedoctor?branch=main#689b2e03a94d866f5a7d5a6a34078e0f27b53f24" }
 dependencies = [
     { name = "pyyaml" },
     { name = "rignore" },
@@ -1344,7 +1342,7 @@ wheels = [
 [[package]]
 name = "rekursiv-ai-typings"
 source = { editable = "." }
-default-groups = ["cuda", "dev"]
+default-groups = ["default-cuda", "dev"]
 
 [package.optional-dependencies]
 cpu = [
@@ -1379,14 +1377,14 @@ cu134 = [
 ]
 
 [package.dev-dependencies]
-cuda = [
-    { name = "torch" },
-    { name = "torchao" },
-    { name = "torchvision" },
-]
 debug = [
     { name = "ipython" },
     { name = "tqdm" },
+]
+default-cuda = [
+    { name = "torch" },
+    { name = "torchao" },
+    { name = "torchvision" },
 ]
 dev = [
     { name = "basedpyright" },
@@ -1464,14 +1462,14 @@ requires-dist = [
 provides-extras = ["cpu", "cu126", "cu128", "cu130", "cu132", "cu134"]
 
 [package.metadata.requires-dev]
-cuda = [
-    { name = "torch" },
-    { name = "torchao" },
-    { name = "torchvision" },
-]
 debug = [
     { name = "ipython", specifier = ">=9.18.0" },
     { name = "tqdm", specifier = ">=4.70.1" },
+]
+default-cuda = [
+    { name = "torch" },
+    { name = "torchao" },
+    { name = "torchvision" },
 ]
 dev = [
     { name = "basedpyright", specifier = ">=1.40.2" },
