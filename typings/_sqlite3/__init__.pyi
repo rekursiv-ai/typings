@@ -211,16 +211,10 @@ threadsafety: Literal[0, 1, 3]
 
 # Can take or return anything depending on what's in the registry.
 @overload
-def adapt(obj: Any, proto: Any, /) -> Any:
-    """Adapt given object to given protocol."""
-
+def adapt(obj: Any, proto: Any, /) -> Any: ...
 @overload
-def adapt(obj: Any, proto: Any, alt: _T, /) -> Any | _T:
-    """Adapt given object to given protocol."""
-
-def complete_statement(statement: str) -> bool:
-    """Checks if a string contains a complete SQL statement."""
-
+def adapt(obj: Any, proto: Any, alt: _T, /) -> Any | _T: ...
+def complete_statement(statement: str) -> bool: ...
 @overload
 def connect(
     database: StrOrBytesPath,
@@ -232,13 +226,7 @@ def connect(
     uri: bool = False,
     *,
     autocommit: bool = ...,
-) -> Connection:
-    """Open a connection to the SQLite database file 'database'.
-
-    You can use ":memory:" to open a database connection to a database that
-    resides in RAM instead of on disk.
-    """
-
+) -> Connection: ...
 @overload
 def connect(
     database: StrOrBytesPath,
@@ -251,13 +239,7 @@ def connect(
     uri: bool = False,
     *,
     autocommit: bool = ...,
-) -> _ConnectionT:
-    """Open a connection to the SQLite database file 'database'.
-
-    You can use ":memory:" to open a database connection to a database that
-    resides in RAM instead of on disk.
-    """
-
+) -> _ConnectionT: ...
 @overload
 def connect(
     database: StrOrBytesPath,
@@ -270,18 +252,7 @@ def connect(
     cached_statements: int = 128,
     uri: bool = False,
     autocommit: bool = ...,
-) -> _ConnectionT:
-    """Open a connection to the SQLite database file 'database'.
-
-    You can use ":memory:" to open a database connection to a database that
-    resides in RAM instead of on disk.
-    """
-
-def enable_callback_tracebacks(enable: bool, /) -> None:
-    """Enable or disable callback functions throwing errors to stderr."""
-
-def register_adapter(type: type[_T], adapter: _Adapter[_T], /) -> None:
-    """Register a function to adapt Python objects to SQLite values."""
-
-def register_converter(typename: str, converter: _Converter, /) -> None:
-    """Register a function to convert SQLite values to Python objects."""
+) -> _ConnectionT: ...
+def enable_callback_tracebacks(enable: bool, /) -> None: ...
+def register_adapter(type: type[_T], adapter: _Adapter[_T], /) -> None: ...
+def register_converter(typename: str, converter: _Converter, /) -> None: ...
