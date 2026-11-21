@@ -238,13 +238,10 @@ type _Parameters = (
 type _IsolationLevel = Literal["DEFERRED", "EXCLUSIVE", "IMMEDIATE"] | None
 type _RowFactoryOptions = type[Row] | Callable[[Cursor, tuple[Any, ...]], object] | None
 
-# What a fetch returns: a tuple, a ``Row``, or whatever ``row_factory`` builds. Its
-# values are ``object`` rather than ``Any``, so callers narrow what they read.
-@type_check_only
-class _FetchedRow(Protocol):
-    def __getitem__(self, key: int | str, /) -> object: ...
-    def __iter__(self) -> Iterator[object]: ...
-    def __len__(self) -> int: ...
+# What a fetch returns under the stdlib row factories: a tuple by default, a ``Row``
+# when ``row_factory = Row``. A custom factory's rows need a ``cast`` at the caller.
+# Values are ``object`` rather than ``Any``, so callers narrow what they read.
+type _FetchedRow = tuple[object, ...] | Row
 
 @type_check_only
 class _AnyParamWindowAggregateClass(Protocol):
