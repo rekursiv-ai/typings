@@ -3,7 +3,7 @@ from collections.abc import Callable, Mapping
 from contextlib import contextmanager
 from enum import Enum
 from functools import wraps
-from typing import Any, Self, TypeVar, Unpack
+from typing import Any, Self, TypedDict, TypeVar, Unpack
 from typing_extensions import deprecated
 
 import os
@@ -38,6 +38,11 @@ SpecificPreTrainedModelType = TypeVar(
     "SpecificPreTrainedModelType",
     bound=PreTrainedModel,
 )
+
+class _ActivationCheckpointingOptions(TypedDict, total=False):
+    every_n_layers: int
+    offload: bool
+
 _init_weights = ...
 _is_quantized = ...
 _is_ds_init_called = ...
