@@ -3,7 +3,8 @@ from collections.abc import Callable, Mapping
 from contextlib import contextmanager
 from enum import Enum
 from functools import wraps
-from typing import Any, Self, TypeVar
+from typing import Any, Self, TypeVar, Unpack
+from typing_extensions import deprecated
 
 import os
 
@@ -244,14 +245,25 @@ class PreTrainedModel(
         ...
     def prune_heads(self, heads_to_prune: dict[int, list[int]]):  # -> None:
         ...
+    def activation_checkpointing_enable(
+        self,
+        activation_checkpointing_kwargs: Mapping[str, object] | None = ...,
+        every_n_layers: int = ...,
+        offload: bool = ...,
+    ) -> None: ...
+    def activation_checkpointing_disable(self) -> None: ...
+    @property
+    def is_activation_checkpointing(self) -> bool: ...
+    @deprecated("Use `activation_checkpointing_enable`; removed in transformers v6.")
     def gradient_checkpointing_enable(
         self,
         gradient_checkpointing_kwargs: Mapping[str, object] | None = ...,
-        every_n_layers: int = ...,
+        **kwargs: Unpack[_ActivationCheckpointingOptions],
     ) -> None: ...
-    def gradient_checkpointing_disable(self):  # -> None:
-        ...
+    @deprecated("Use `activation_checkpointing_disable`; removed in transformers v6.")
+    def gradient_checkpointing_disable(self) -> None: ...
     @property
+    @deprecated("Use `is_activation_checkpointing`; removed in transformers v6.")
     def is_gradient_checkpointing(self) -> bool: ...
     def save_pretrained(
         self,
