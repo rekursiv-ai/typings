@@ -9,8 +9,9 @@ from yaml.error import Mark
 class Node:
     tag: str
     value: Incomplete
-    start_mark: Mark | Any
-    end_mark: Mark | Any
+    # The composer marks every node it builds; the representer builds them unmarked.
+    start_mark: Mark | None
+    end_mark: Mark | None
     def __init__(
         self,
         tag: str,

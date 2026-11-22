@@ -1,18 +1,18 @@
 from typing import ClassVar
 
 from _typeshed import Incomplete
+from yaml.error import Mark
 
+# The scanner marks every token it yields; a token built by hand may have none.
 class Token:
-    start_mark: Incomplete
-    end_mark: Incomplete
+    start_mark: Mark | None
+    end_mark: Mark | None
     def __init__(self, start_mark, end_mark) -> None: ...
 
 class DirectiveToken(Token):
     id: ClassVar[str]
     name: Incomplete
     value: Incomplete
-    start_mark: Incomplete
-    end_mark: Incomplete
     def __init__(self, name, value, start_mark, end_mark) -> None: ...
 
 class DocumentStartToken(Token):
@@ -23,8 +23,6 @@ class DocumentEndToken(Token):
 
 class StreamStartToken(Token):
     id: ClassVar[str]
-    start_mark: Incomplete
-    end_mark: Incomplete
     encoding: Incomplete
     def __init__(self, start_mark=None, end_mark=None, encoding=None) -> None: ...
 
@@ -66,30 +64,22 @@ class FlowEntryToken(Token):
 
 class AliasToken(Token):
     id: ClassVar[str]
-    value: Incomplete
-    start_mark: Incomplete
-    end_mark: Incomplete
+    value: str
     def __init__(self, value, start_mark, end_mark) -> None: ...
 
 class AnchorToken(Token):
     id: ClassVar[str]
-    value: Incomplete
-    start_mark: Incomplete
-    end_mark: Incomplete
+    value: str
     def __init__(self, value, start_mark, end_mark) -> None: ...
 
 class TagToken(Token):
     id: ClassVar[str]
     value: Incomplete
-    start_mark: Incomplete
-    end_mark: Incomplete
     def __init__(self, value, start_mark, end_mark) -> None: ...
 
 class ScalarToken(Token):
     id: ClassVar[str]
     value: Incomplete
     plain: Incomplete
-    start_mark: Incomplete
-    end_mark: Incomplete
     style: Incomplete
     def __init__(self, value, plain, start_mark, end_mark, style=None) -> None: ...
