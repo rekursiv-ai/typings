@@ -28,6 +28,7 @@ def segment_hits(
 ) -> ArrayLike: ...
 
 class Line2D(Artist):
+    _unscaled_dash_pattern: tuple[float, tuple[float, ...] | None]
     lineStyles: dict[str, str]
     drawStyles: dict[str, str]
     drawStyleKeys: list[str]
