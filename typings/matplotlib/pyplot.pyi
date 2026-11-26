@@ -1,3 +1,4 @@
+from contextlib import AbstractContextManager
 from os import PathLike
 from typing import Any, Literal, overload
 
@@ -9,6 +10,10 @@ from numpy.typing import NDArray
 
 rcParams: RcParams
 
+def rc_context(
+    rc: dict[str, object] | None = None,
+    fname: str | PathLike[str] | None = None,
+) -> AbstractContextManager[None]: ...
 def switch_backend(newbackend: str) -> None: ...
 def figure(
     num: int | str | Figure | None = None,
