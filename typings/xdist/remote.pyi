@@ -1,3 +1,6 @@
+class WorkerInteractor:
+    def sendevent(self, name: str, **kwargs: object) -> None: ...
+
 class Producer:
     name: str
     enabled: bool
