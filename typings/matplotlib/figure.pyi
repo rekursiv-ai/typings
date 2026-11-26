@@ -6,13 +6,23 @@ from matplotlib.artist import Artist
 from matplotlib.axes import Axes
 from matplotlib.cm import ScalarMappable
 from matplotlib.colorbar import Colorbar
+from matplotlib.gridspec import SubplotParams
 from matplotlib.legend import Legend
 from matplotlib.text import Text
 from matplotlib.typing import ColorType
+from numpy.typing import NDArray
+
+import numpy as np
 
 class Figure:
     axes: list[Axes]
     texts: list[Text]
+    subplotpars: SubplotParams
+    @property
+    def dpi(self) -> float: ...
+    @dpi.setter
+    def dpi(self, dpi: float) -> None: ...
+    def get_size_inches(self) -> NDArray[np.float64]: ...
     def __init__(
         self,
         figsize: tuple[float, float] | None = ...,

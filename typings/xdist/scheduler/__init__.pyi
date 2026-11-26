@@ -1,0 +1,1 @@
+from xdist.scheduler.worksteal import WorkStealingScheduling as WorkStealingScheduling
